@@ -1,12 +1,13 @@
 ---
 netconf:
   host: "{{ ansible_ssh_host }}"
-  username: "{{ junos_cli_user | default('ansible') }}"
-  password: "{{ junos_cli_pass | default('Ansible') }}"
+# username: "{{ junos_cli_user | default('ansible') }}"
+# password: "{{ junos_cli_pass | default('AnsiblePassword1!') }}"
   transport: netconf
 
 cli:
   host: "{{ ansible_ssh_host }}"
-  username: "{{ junos_cli_user | default('ansible') }}"
-  password: "{{ junos_cli_pass | default('Ansible') }}"
+  username: "{{ junos_cli_user | default('root') }}"
+# password: "{{ junos_cli_pass | default('AnsiblePassword1!') }}"
+  ssh_keyfile: "{{ ansible_ssh_private_key_file }}"
   transport: cli

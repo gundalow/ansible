@@ -1,6 +1,7 @@
 ---
 cli:
   host: "{{ ansible_ssh_host }}"
-  username: "{{ vyos_cli_user | default('ansible-admin') }}"
-  password: "{{ vyos_cli_pass | default('adminpw') }}"
+  username: "{{ vyos_cli_user | default('vyos') }}"
+    #password: "{{ vyos_cli_pass | default('vyos') }}"
+  ssh_keyfile: "{{ ansible_ssh_private_key_file }}"
   transport: cli
