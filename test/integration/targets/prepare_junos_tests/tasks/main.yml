@@ -1,0 +1,4 @@
+ - name: enable netconf on remote device
+   junos_netconf:
+     state: present
+     provider: "{{ cli }}"
