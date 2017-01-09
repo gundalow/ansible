@@ -1,9 +1,13 @@
 ---
 - debug: msg="START cli/comment.yaml"
 
+- name: Debug
+  debug:
+      msg: "{{ inventory_hostname_short }}"
+
 - name: setup
   vyos_config:
-    lines: set system host-name {{ inventory_hostname }}
+    lines: set system host-name {{ inventory_hostname_short }}
     provider: "{{ cli }}"
     match: none
 
@@ -31,7 +35,7 @@
 
 - name: teardown
   vyos_config:
-    lines: set system host-name {{ inventory_hostname }}
+    lines: set system host-name {{ inventory_hostname_short }}
     provider: "{{ cli }}"
     match: none
 
