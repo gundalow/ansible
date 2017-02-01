@@ -8,22 +8,99 @@ can be included in Ansible, but modules (just due to the programming
 preferences of the developers) will need to be implemented in Python and use
 the AnsibleModule common code, and should generally use consistent arguments with the rest of
 the program.   Stop by the mailing list to inquire about requirements if you like, and submit
-a github pull request to the `ansible <https://github.com/ansible/ansible>`_ project.
-Included modules will ship with ansible, and also have a chance to be promoted to 'core' status, which
-gives them slightly higher development priority (though they'll work in exactly the same way).
+a GitHub pull request to the `ansible <https://github.com/ansible/ansible>`_ project.
 
 .. formerly marked with _module_dev_testing:
 
 Contributing Modules Checklist
 ``````````````````````````````
 
-The following  checklist items are important guidelines for people who want to contribute to the development of modules to Ansible on GitHub. Please read the guidelines before you submit your PR/proposal.
+The following checklist items are important guidelines for people who want to contribute to the development of modules to Ansible on GitHub. We recommend you read this guidelines *before* you start to code and *again* after you finished, before you submit your PR (Pull Request).
 
-* The shebang must always be ``#!/usr/bin/python``.  This allows ``ansible_python_interpreter`` to work
-* Modules must be written to support Python 2.4. If this is not possible, required minimum python version and rationale should be explained in the requirements section in ``DOCUMENTATION``.  This minimum requirement will be advanced to Python-2.6 in Ansible-2.4.
-* Modules must be written to use proper Python-3 syntax.  At some point in the future we'll come up with rules for running on Python-3 but we're not there yet.  See :doc:`developing_modules_python3` for help on how to do this.
-* Modules must have a metadata section.  For the vast majority of new modules,
-  the metadata should look exactly like this:
+High Level Design
+`````````````````
+
+**Predictable user interface**
+* FIXME: Examples
+  * parameters: state, name, etc
+  * This is a particularly important section as it is also an area where we need significant improvements.
+* Name consistency across module
+  * FIXME: Peter had a good way of explaining this
+  * Module names must be singular (rather than plural), e.g. "command" not "commands"
+  * To see the existing list of modules do ansible-doc -l or visit LINKTOMODULELIST
+* Declarative operation (not CRUD)
+  * This makes it easy for a user not to care what the existing state is, just about the final state. ``started/stopped``, ``present/absent``
+  * Don't overload options too much.
+  * It is preferable to add a new, simple option than to add choices/states that don't fit with existing ones.
+  * If you have a parameter that takes true/false and other non-boolean options such as absent/present this generally indicates a bad design.
+* Options
+  * Keep options small, having them take large data structures might save users of the module a few tasks, but adds a complex requirement that cannot easily validate before passing on to the module.
+  * Allow an "expert mode". This may sound like the absolute opposite of the previous one, but it is always best to let expert users deal with complex data. This requires different modules in some cases.
+
+
+Implementation
+``````````````
+
+**Informative responses**
+
+* As of Ansible 2.0 all return data must be documented.
+* Always return useful data, even when there is no change.
+* Be consistent about returns, unless it is detrimental to the state/action.
+* Make returns reusable
+  * Most of the time you don't want to read the return, but you do want to process it and re-purpose it, e.g. FIXME
+  * Examples showing how to use returned data can be useful.
+* Return diff if in diff mode. This is not required for all modules, as it won't make sense for certain ones, but please attempt to include this when applicable.
+* Modules must be written to support Python 2.4. If this is not possible, perhaps due to the library you are using not supporting Python 2.4, then the required minimum python version and rationale should be explained in the requirements section in DOCUMENTATION.
+* Modules must be Python 2.6 and Python 3.5+ compatible.  At some point in the future we'll come up with rules for running on Python-3 but we're not there yet.  See :doc:`developing_modules_python3` for help on how to do this.
+
+
+
+
+
+The following are good programming practices, and are highlighted here as we often see these issues with modules:
+
+* Validate upfront
+  * Fail fast and return useful and clear error messages.
+  * Link to docs on how to use argument_spec (required=True, mutually_exclusive)
+* Defensive programming
+  * Modules should be designed simply enough that this should be easy.
+  * Modules should always handle errors gracefully and avoid direct stacktraces.
+* Fail predictably
+  * If we must fail, do it in a way that is the most expected.
+  * Either mimic the underlying tool or the general way the system works.
+  * A module MUST never call exit, they instead should use one of LISTHERE
+* Modules should not do the job of other modules, that is what roles are for.
+  * If you find yourself wanting to import functionality from another module that may be a sign that a role is needed, rather than a module.
+* Don't reinvent the wheel.
+  * FIXME this section needs work
+  * FIXME Link to module_utils
+* Support check mode.
+  * This is not required for all modules, as it won't make sense for certain ones, but please attempt to include this when applicable). For more information, refer to :ref:`check_mode_drift` and :ref:`check_mode_dry`.
+
+
+
+**Exceptions**
+* The module must handle them, exceptions are bugs. Python backtraces should not be shown to a user.
+* Display useful messages on what you were doing and you can add the exception message to that.
+* Avoid catchall exceptions, they are not very useful unless the underlying API gives very good error messages pertaining the attempted action.
+
+
+
+Module Structure
+````````````````
+
+Every module must have
+
+* Shebang always be ``#!/usr/bin/python``.  This allows ``ansible_python_interpreter`` to work.
+* ``ANSIBLE_METADATA`` block.
+* ``DOCUMENTATION`` block.
+* ``EXAMPLES`` block.
+* ``RETURN`` block.
+
+
+**ANSIBLE_METADATA**
+
+Modules must have a metadata section.  For the vast majority of new modules, the metadata should look exactly like this:
 
 .. code-block:: python
 
@@ -31,7 +108,29 @@ The following  checklist items are important guidelines for people who want to c
                         'supported_by': 'community',
                         'version': '1.0'}
 
+
 The complete module metadata specification is here: https://github.com/ansible/proposals/issues/30
+
+
+
+**DOCUMENTATION**
+
+* Module documentation should briefly and accurately define what each module and option does, and how it works with others in the underlying system.
+* Documentation should be written in American English for broad audience, readable both by experts and non-experts.
+* The documentation block must be valid YAML
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 * Documentation: Make sure it exists
     * Module documentation should briefly and accurately define what each module and option does, and how it works with others in the underlying system. Documentation should be written for broad audience--readable both by experts and non-experts. This documentation is not meant to teach a total novice, but it also should not be reserved for the Illuminati (hard balance).
@@ -115,8 +214,8 @@ The complete module metadata specification is here: https://github.com/ansible/p
   serializable.  A common pitfall is to try returning an object via
   exit_json().  Instead, convert the fields you need from the object into the
   fields of a dictionary and return the dictionary.
-* When fetching URLs, please use either fetch_url or open_url from ansible.module_utils.urls 
-  rather than urllib2; urllib2 does not natively verify TLS certificates and so is insecure for https. 
+* When fetching URLs, please use either fetch_url or open_url from ansible.module_utils.urls
+  rather than urllib2; urllib2 does not natively verify TLS certificates and so is insecure for https.
 * facts modules must return facts in the ansible_facts field of the result
   dictionary. :ref:`module_provided_facts`
 * modules that are purely about fact gathering need to implement check_mode.
