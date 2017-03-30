@@ -1,0 +1,23 @@
+- hosts: ios
+  connection: local
+
+  tasks:
+    - name: Setup motd banner
+      ios_banner:
+        banner:  motd
+        text: "{{ lookup('pipe', 'date') }}"
+        state: present
+        authorize: yes
+        host: "{{ ansible_host }}"
+        username: "{{ user }}"
+        password: "{{ password }}"
+
+    - name: Setup motd banner
+      ios_banner:
+        banner:  motd
+        text: "{{ lookup('pipe', 'date') }}"
+        state: present
+        authorize: yes
+        host: "{{ ansible_host }}"
+        username: "{{ user }}"
+        password: "{{ password }}"

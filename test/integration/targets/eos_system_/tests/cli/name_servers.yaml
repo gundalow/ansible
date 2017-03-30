@@ -1,0 +1,48 @@
+---
+# FIXME Can we remove just the name servers?
+
+
+- name: setup name_servers to junk
+  eos_system:
+    name_servers: []
+    state: absent
+    authorize: yes
+
+- name: Set name_servers
+  eos_system:
+    name_servers:
+      - 8.8.8.8
+    authorize: yes
+  register: result
+
+- debug:
+    msg: "{{ result }}"
+
+- assert:
+    that:
+      - "result.changed == true"
+      - "'8.8.8.8' in result.commands"
+      # Ensure sessions contains epoc. Will fail after 18th May 2033
+      - "'ansible_1' in result.session_name"
+
+- name: Set name_servers again (idempotent)
+  eos_system:
+    name_servers:
+      - 8.8.8.8
+    authorize: yes
+  register: result
+
+- assert:
+    that:
+      - "result.changed == false"
+      - "result.commands is not defined"
+      # Ensure sessions contains epoc. Will fail after 18th May 2033
+      - "result.session_name contains 'ansible_1'"
+# FIXME BUG https://github.com/ansible/ansible/issues/22194
+  ignore_errors: yes
+
+
+# FIXME add in tests for everything defined in docs
+# FIXME Test state:absent + test:
+# FIXME Without powers ensure "privileged mode required"
+
