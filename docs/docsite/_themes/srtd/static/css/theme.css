@@ -4512,7 +4512,7 @@ footer p {
 }
 
 .rst-content dl dt {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .rst-content dl p, .rst-content dl table, .rst-content dl ul, .rst-content dl ol {
