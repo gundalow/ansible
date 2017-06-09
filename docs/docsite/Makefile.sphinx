@@ -8,6 +8,23 @@ SPHINXPROJ    = sdfsdf
 SOURCEDIR     = rst
 BUILDDIR      = _build
 
+# HACK
+# For testing override GIT_BRANCH which is set in the top-level Makefile
+GIT_BRANCH=devel
+GIT_BRANCH=stable-2.3
+# END HACK
+
+# If this build job has been triggered via Jenkins
+# Then put the build into a versioned directory such as
+# _build_devel
+# _build_stable-2.3
+
+ifdef OFFICIAL
+ifdef GIT_BRANCH
+BUILDDIR = "_build_$(GIT_BRANCH)"
+endif
+endif
+
 # Put it first so that "make" without argument is like "make help".
 help:
 	$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
@@ -17,4 +34,4 @@ help:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile.sphinx
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	echo @$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
