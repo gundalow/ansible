@@ -29,7 +29,7 @@ Ansible Changes By Release
 * fix for win_find where it fails to recursively scan empty nested directories
 + fix non-pipelined code paths for Windows (eg, ANSIBLE_KEEP_REMOTE_FILES, non-pipelined connection plugins)
 * fix for win_updates where args and check mode were ignored due to common code change
-
+* Add integration tests for openvswitch_db
 
 ## 2.3.1 "Ramble On" - 2017-06-01
 
