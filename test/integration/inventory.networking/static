@@ -1,0 +1,35 @@
+[asa]
+aws-asa ansible_connection="local" ansible_host="ec2-23-20-132-137.compute-1.amazonaws.com" ansible_ssh_private_key_file="/home/johnb/.ssh/awspair.pem" ansible_user="admin"
+# ansible_network_os="asa"
+
+[vyos]
+vyos-1_1_0 ansible_connection="local" ansible_host="ec2-34-226-142-12.compute-1.amazonaws.com" ansible_network_os="vyos" ansible_ssh_private_key_file="/home/johnb/.ansible/test/id_rsa" ansible_user="vyos"
+
+
+[ovs-xenial]
+
+[platform-agnostic-vyos]
+
+[ovs:children]
+ovs-xenial
+
+[platform_agnostic:children]
+platform-agnostic-vyos
+
+[ovs:vars]
+ansible_ssh_user=ubuntu
+
+[platform-agnostic-vyos:vars]
+ansible_network_os=vyos
+ansible_ssh_user=vyos
+ansible_ssh_pass=vyos
+
+[vyos:vars]
+ansible_network_os=vyos
+ansible_ssh_user=vyos
+ansible_ssh_pass=vyos
+
+[eos:vars]
+ansible_network_os=eos
+ansible_ssh_user=admin
+ansible_ssh_pass=admin
