@@ -254,7 +254,7 @@ def command_network_integration(args):
     """
     filename = 'test/integration/inventory.networking'
 
-    if not args.explain and not args.platform and not os.path.isfile(filename):
+    if not args.explain and not args.platform and not (os.path.isfile(filename) or os.path.isdir(filename)):
         raise ApplicationError('Use the --platform option or provide an inventory file (see %s.template).' % filename)
 
     internal_targets = command_integration_filter(args, walk_network_integration_targets())
