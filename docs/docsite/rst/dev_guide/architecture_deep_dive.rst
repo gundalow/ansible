@@ -30,7 +30,7 @@ When `run()` is called from the PlaybookCLI class, Ansible creates several objec
        :language: python
        :start-after: STARTDOC: architecture_deep_dive:ID:cli_data_loader
        :end-before: ENDDOC: architecture_deep_dive:ID:cli_data_loader
-2. Inventory ('lib/ansible/inventory/__init__.py`)
+2. Inventory (`lib/ansible/inventory/__init__.py`)
     .. literalinclude:: ../../../../lib/ansible/cli/__init__.py
        :language: python
        :start-after: STARTDOC: architecture_deep_dive:ID:cli_inventory
@@ -40,7 +40,7 @@ When `run()` is called from the PlaybookCLI class, Ansible creates several objec
        :language: python
        :start-after: STARTDOC: architecture_deep_dive:ID:cli_variable_manager
        :end-before: ENDDOC: architecture_deep_dive:ID:cli_variable_manager
-4. PlaybookExecutor ('lib/ansible/executor/playbook_executor.py`)
+4. PlaybookExecutor (`lib/ansible/executor/playbook_executor.py`)
 
 
 DataLoader
@@ -92,7 +92,7 @@ Within the second loop, PlaybookExecutor does the following tasks:
 3. Prompts for any variables, as specified in the vars_prompt for the current play.
 4. Post-validates the play.
 
-At this point, if a CLI option like `--list-tasks` or --lists-hosts` was specified, the current play is simply appended to a list for use later. Otherwise, we move on to actually running the play. PlaybookExecutor then does the following:
+At this point, if a CLI option like `--list-tasks` or `--lists-hosts` was specified, the current play is simply appended to a list for use later. Otherwise, we move on to actually running the play. PlaybookExecutor then does the following:
 
 1. Updates internal records of failed an unreachable hosts (mainly done only after the first play in the list).
 2. Uses the `serial` keyword to split the list of hosts into "batches". This is handled by the `_get_serialized_batches(play)` method in PlaybookExecutor.
@@ -331,7 +331,7 @@ This is quite simple, as `_get_next_task_from_state` does the heavy lifting here
 
    1. We advance to `ITERATING_ALWAYS` on failures, or if we run out of tasks.
    2. If we did run out of tasks, it means we performed a rescue, so we reset the `fail_state` and set the `did_rescue` flag to True. This flag is used later to make sure we don't consider a state failed if it has done a rescue.
-5. If the `run_state` is `ITERATING_ALWAYS, we again do the same thing as `ITERATING_TASKS`, with two exceptions:
+5. If the `run_state` is `ITERATING_ALWAYS`, we again do the same thing as `ITERATING_TASKS`, with two exceptions:
 
    1. We advance to `ITERATING_COMPLETE` on failures, or if we run out of tasks.
    2. If we did run out of tasks, we advance the `cur_block` counter and reset all of the other state counters. If this block was an "end of role" block (and this role had a task run), we set a flag to use later to prevent roles from running more than once.
@@ -389,6 +389,7 @@ As noted above, the `TaskExecutor` is the main classed used in the forked worker
 
 1. Creates the loop items list using the `_get_loop_items()` method. If current task has no loop, the value will be `None`. If an error is raised here, the error is saved and deferred to later due to the fact that the task may be skipped via a conditional.
 2. If there is a list of items to process from the list:
+
    1. `TaskExecutor` calls the `_run_loop()` method. This method calls `_execute()` in a loop and returns a list of results, which is then embedded in a dictionary result to become the `result['results']` value mentioned in the section on `_process_pending_results()` above.
    2. Each result is also checked to see if any sub-result was changed and/or failed, which determines whether the task overall was changed and/or failed.
    3. If the items list was empty (which can happen due to conditional filtering in `_get_loop_items()`), an appropriate result is generated.
@@ -450,12 +451,14 @@ The `ActionBase` class does the following:
 2. Using the module formatting methods to compile the module we will send to the remote system.
 3. Creating the environment string, which is prepended to the remote command Ansible runs to execute the module.
 4. Copying files (via the connection plugin) and managing remote permissions to ensure the files are accessible/executable as needed:
+
    1. `_transfer_file` - copies a file to the remote system.
    2. `_transfer_data` - which creates a temp file and uses `_transfer_file` to move it to the remote system.
    3. `_fixup_perms` (deprecated) and `_fixup_perms2`, used to ensure the permissions on the remote file/directory are correct.
    4. `_remote_chown`, `_remote_chmod`, and `_remote_set_user_facl` - used to ensure the correct ownership and/or accessibility of the remote file.
    5. `_remote_expand_user` - used to expand the `~` shell variable to a full path.
 5. Fetching information about remote files:
+
    1. `_execute_remote_stat` - uses `_execute_module` (more on that below) to run the `stat` module on a remote path.
    2. `_remote_checksum` - uses `_execute_remote_stat` to get a remote checksum in a consistent and platform-agnostic way.
 6. Inserts some special module arguments based on internal settings via `_update_module_args`.
@@ -474,11 +477,14 @@ Following the standard Ansible plugin convention, all action plugins derived fro
 5. The environment string is built using `_compute_environment_string()`.
 6. A list of remote files to upload is built, to keep track of things we need to manage permissions on and possibly delete later.
 7. If this task is an `async` task:
+
    1. Use `_configure_module` to build the `async_wrapper` module.
    2. Upload the above module package.
    3. Build the command string to execute it later.
 8. Otherwise:
-   1. If pipelining is enabled, we set the `in_data` value to the `module_data` returned by `_configure_module` above, otherwise the remote command is set to the remote path created earlier.   2. In certain situations, we may need to manually remove the temp directory later, so that is calculated next.
+
+   1. If pipelining is enabled, we set the `in_data` value to the `module_data` returned by `_configure_module` above, otherwise the remote command is set to the remote path created earlier.
+   2. In certain situations, we may need to manually remove the temp directory later, so that is calculated next.
    3. The final command to run on the remote system is built using the associated connection plugin's shell plugin (more on this later).
 9. Permissions are updated on all remote files in the list we created earlier using `_fixup_perms2`.
 10. `_low_level_execute_command` is called to actually run the command we built on the target system.
