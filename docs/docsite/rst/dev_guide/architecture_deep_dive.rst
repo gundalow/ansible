@@ -1,3 +1,6 @@
+
+.. contents:: Topics
+
 Ansible execution begins with the script: `bin/ansible`. This script is sym-linked to other names, such as ansible-playbook and ansible-pull.
 
 When executed, this script looks at the first parameter passed to it. On Linux/Unix systems, this parameter is the name of the script itself. By examining this value, we can determine which CLI class we should load and execute.
@@ -45,7 +48,7 @@ DataLoader
 
 The DataLoader class does the following jobs:
 
-- Load YAML and JSON files in a consistent manner. 
+- Load YAML and JSON files in a consistent manner.
 - Caching files which have been previously loaded.
 - Manage decrypting vault-encrypted files.
 
@@ -156,7 +159,7 @@ In Ansible, strategy plugins were created to control how tasks were queued to re
 
 1. Creates a background thread to pull results off the `final_q` (defined in the TQM above).
 2. Defines the `_queue_task()` method, which handles starting up a worker process to run a task on a host (or blocking until a worker slot is available).
-3. Reading results off the result queue and processing the results. 
+3. Reading results off the result queue and processing the results.
 4. Executing any handlers which may have been notified.
 5. Processing dynamically included task files and roles.
 6. Provides common methods to add a host or group to the current inventory (used when processing results).
@@ -283,7 +286,7 @@ The PlayIterator maintains a dictionary, which uses host names for keys and `Hos
 - A flag indicating whether the current state involved executing a `rescue` block.
 - A flag indicating whether a task was found when `--start-at-task` was used from the command line.
 
-The `HostState` object doesn't do much else beyond defining some helper methods, though the `copy()` call is used to safe guard the state when iterating with `peek=True`. Using the copyied HostState, the PlayIterator can modify the state without prematurely advancing the host to the next task.
+The `HostState` object doesn't do much else beyond defining some helper methods, though the `copy()` call is used to safe guard the state when iterating with `peek=True`. Using the copied HostState, the PlayIterator can modify the state without prematurely advancing the host to the next task.
 
 The PlayIterator class has multiple critical methods:
 
@@ -307,23 +310,29 @@ This is quite simple, as `_get_next_task_from_state` does the heavy lifting here
 
 1. The current block is fetched, based on the `state.cur_block` value.
 2. If the `run_state` is `ITERATING_SETUP`:
-   1. We check to see if the host is waiting for a pending setup task. 
+
+   1. We check to see if the host is waiting for a pending setup task.
    2. If so, we clear this flag and move to `ITERATING_TASKS` by incrementing and/or reseting state counters.
    3. If not, we determine the gathering method and figure out if this host needs to gather facts, and set the task to the setup task.
 3. If the `run_state` is `ITERATING_TASKS`:
+
    1. Clear the `pending_setup` flag if it's set.
    2. If the `tasks_child_state` is set:
+
       1. Call `_get_next_task_from_state` on the child state.
       2. If the child state has a failed state, we use the `_set_failed_state` helper to fail the current (parent) state and zero out the child state.
       3. If the child state returned `None` for a task, or if the child state reached `ITERATING_COMPLETE`, we also zero out the child state but instead of failing we continue back to the top of the while loop to try and find the next task from the advanced state.
    3. When there's no child state:
+
       1. If the current state is failed, advance the state to `ITERATING_RESCUE` and continue back to the top of the loop.
       2. If the current task index went past the end of the task list for this portion of the block, advance the state to `ITERATING_ALWAYS` and continue back to the top of the loop.
       3. Get the task from the current block section. If this task is a `Block` object, create a child state (starting in `ITERATING_TASKS`, because a child state will never run setup). We also clear the task so we don't break out of the loop and instead on the next pass will iterate into the child state. Otherwise, if the task is just a `Task`, we'll break out of the loop.
 4. If the `run_state` is `ITERATING_RESCUE`, we pretty much do exactly the same thing as above, with two differences:
+
    1. We advance to `ITERATING_ALWAYS` on failures, or if we run out of tasks.
    2. If we did run out of tasks, it means we performed a rescue, so we reset the `fail_state` and set the `did_rescue` flag to True. This flag is used later to make sure we don't consider a state failed if it has done a rescue.
 5. If the `run_state` is `ITERATING_ALWAYS, we again do the same thing as `ITERATING_TASKS`, with two exceptions:
+
    1. We advance to `ITERATING_COMPLETE` on failures, or if we run out of tasks.
    2. If we did run out of tasks, we advance the `cur_block` counter and reset all of the other state counters. If this block was an "end of role" block (and this role had a task run), we set a flag to use later to prevent roles from running more than once.
 6. If the `run_state` is `ITERATING_COMPLETE`, we again return the `(state, None)` tuple.
@@ -339,11 +348,14 @@ The `mark_host_failed` and `_set_failed_state` work similarly. Starting in the m
 And in `_set_failed_state`:
 
 1. If `run_state` is `ITERATING_SETUP`:
+
    1. Add `FAILED_SETUP` to the `fail_state` bitmask.
    2. Set the `run_state` to `ITERATING_COMPLETE`.
 2. If `run_state` is `ITERATING_TASKS`:
+
    1. If there's a child state here, set the child state to the value returned by a recursive call to `_set_failed_state`.
    2. Otherwise, add `FAILED_TASKS` to the `fail_state` bitmask.
+
       1. If there's a rescue block, set the `run_state` to `ITERATING_RESCUE`.
       2. Otherwise we set the `run_state` to `ITERATING_COMPLETE`.
 3. If the `run_state` is `ITERATING_RESCUE` or `ITERATING_ALWAYS`, we do the same thing as above except for the different failure values and the state to which we advance.
@@ -368,7 +380,7 @@ As noted above, when a strategy queues a task, Ansible creates a `WorkerProcess`
 
 When Ansible 2.0 was first being written, we originally started all workers at once and passed them things over a multiprocessing `Queue`. However, we quickly ran into speed and memory issues doing so, so we now create workers on the fly and they receive all shared-memory objects via the `__init__` call of `WorkerProcess`. The other thing `__init__` does is to create a copy of the stdin when a TTY is in use, or to make sure stdin is pointed at `/dev/null` when there is no TTY.
 
-The implementation of `run()` is very simple, as it basically just creates a `TaskExecutor` object and immediately calls its `run()` method to execute the task. If successful, the resulting `TaskResult` object is put on on the shared queue (`rslt_q`) and the worker exits. If an execption was raised, we try and do a little special handling depending on the error, and put a custom-made `TaskResult` on the queue for the main thread to process.
+The implementation of `run()` is very simple, as it basically just creates a `TaskExecutor` object and immediately calls its `run()` method to execute the task. If successful, the resulting `TaskResult` object is put on on the shared queue (`rslt_q`) and the worker exits. If an exception was raised, we try and do a little special handling depending on the error, and put a custom-made `TaskResult` on the queue for the main thread to process.
 
 Task Executor
 -------------
@@ -386,8 +398,9 @@ Before we get to `_execute()`, we'll look at the chain of execution when looping
 
 1. Creates a list to keep track of results.
 2. Determines the loop variable name. By default, this is `item` but can be set via the loop control object. We also do a check here to see if the loop variable name already exists in the variable dictionary and issue a warning to the user if so.
-3. Items are squashed. This typically occurs for packaging modules so they can be executed in one pass instead of multiple, but it possible to configure other modules to be "squashable".
+3. Items are squashed. This typically occurs for packaging modules so they can be executed in one pass instead of multiple, but it possible to configure other modules to be "squashable". This will be changing in 2.5.
 4. Items are looped over:
+
    1. Add the item to the variable dictionary, using the loop variable name determined above.
    2. If there is a pause configured in the loop control and this is not the first pass, we pause for the configured amount of time.
    3. Create a copy of the Task object. Because later on we call `post_validate` on the task (which modifies the task in-place) and we're looping, we need a clean copy for each pass.
@@ -412,12 +425,13 @@ The `_execute()` method is the main method used in `TaskExecutor`. This method:
 11. If using the do/until task syntax, we setup the number of loops, etc. to use. By default, there will be one loop with no pause so the task is executed at least once.
 12. We make a copy of the variables, in case we need to update them with the value from a `register` on a task or some other reason.
 13. Begin looping over the number of retries:
+
    1. Call the `run()` method of the loaded action plugin (referred to as the `handler`).
    2. If namespaced facts are enabled (in Ansible 2.4+), we move any returned facts to the special facts namespace.
    3. If the result contains an `rc` (return code) value and it is non-zero, we set the `failed` flag on the result to `True`.
    4. If the task was not skipped, we call the helper methods `_evaluate_failed_when_result` and `_evaluate_changed_when_result` to modify the result (if the user has specified `changed_when` or `failed_when` on the task).
-
    5. If this task is using a do/until loop, we evaluate the `until` conditional here to see if it has been satisfied. If not, start over at step #1 above. Whether we've succeeded or failed, a few extra flags are updated on the result to reflect the results of the do/until loop, in case this was the last retry attempt. Another per-item result callback is triggered here on a retry, similar to the per-item callback triggered in the item loop above.
+
 14. We again save the `register` value into the vars and move namespaced facts (if necessary).
 15. If this task is notifying a handler, we set a special internal variable (`_ansible_notify`) in the result dictionary with the values from the task.
 16. If any delegated vars exist in the variable dictionary, we also add them to the dictionary result in the special variable named `_ansible_delegated_vars` for use in `_process_pending_results`.
@@ -622,5 +636,4 @@ Display
 
 Unsafe Proxy
 ------------
-
 
