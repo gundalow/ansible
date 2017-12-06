@@ -75,6 +75,7 @@ HEADERS = {
 
 
 class Host(object):
+
     def __init__(self):
         argument_spec = eseries_host_argument_spec()
         argument_spec.update(dict(

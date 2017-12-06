@@ -170,6 +170,7 @@ from ansible.module_utils._text import to_native
 
 
 class RecordManager(object):
+
     def __init__(self, module):
         self.module = module
 

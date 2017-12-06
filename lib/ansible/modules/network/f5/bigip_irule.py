@@ -183,6 +183,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -205,6 +206,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
@@ -298,6 +300,7 @@ class BaseManager(object):
 
 
 class LtmManager(BaseManager):
+
     def exists(self):
         result = self.client.api.tm.ltm.rules.rule.exists(
             name=self.want.name,
@@ -339,6 +342,7 @@ class LtmManager(BaseManager):
 
 
 class GtmManager(BaseManager):
+
     def read_current_from_device(self):
         resource = self.client.api.tm.gtm.rules.rule.load(
             name=self.want.name,
@@ -380,6 +384,7 @@ class GtmManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

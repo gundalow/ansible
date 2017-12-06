@@ -71,6 +71,7 @@ from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class FcoeNetworkFactsModule(OneViewModuleBase):
+
     def __init__(self):
         argument_spec = dict(
             name=dict(type='str'),

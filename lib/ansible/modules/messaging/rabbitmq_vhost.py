@@ -58,6 +58,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class RabbitMqVhost(object):
+
     def __init__(self, module, name, tracing, node):
         self.module = module
         self.name = name

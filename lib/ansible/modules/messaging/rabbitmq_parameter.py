@@ -69,6 +69,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class RabbitMqParameter(object):
+
     def __init__(self, module, component, name, value, vhost, node):
         self.module = module
         self.component = component

@@ -142,6 +142,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class NsoConfig(object):
+
     def __init__(self, check_mode, client, data):
         self._check_mode = check_mode
         self._client = client

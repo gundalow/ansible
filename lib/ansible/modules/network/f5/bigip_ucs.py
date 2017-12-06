@@ -292,6 +292,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -321,6 +322,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -466,6 +468,7 @@ class V1Manager(BaseManager):
       * No API to upload UCS files
 
     """
+
     def create_on_device(self):
         remote_path = "/var/local/ucs"
         tpath_name = '/var/config/rest/downloads'
@@ -560,6 +563,7 @@ class V2Manager(V1Manager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

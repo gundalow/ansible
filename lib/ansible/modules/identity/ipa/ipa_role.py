@@ -126,6 +126,7 @@ from ansible.module_utils._text import to_native
 
 
 class RoleIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(RoleIPAClient, self).__init__(module, host, port, protocol)
 

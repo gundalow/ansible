@@ -90,6 +90,7 @@ from ansible.module_utils.network.iosxr.iosxr import etree_find, etree_findall
 
 
 class ConfigBase(object):
+
     def __init__(self, module):
         self._module = module
         self._result = {'changed': False, 'warnings': []}
@@ -108,6 +109,7 @@ class ConfigBase(object):
 
 
 class CliConfiguration(ConfigBase):
+
     def __init__(self, module):
         super(CliConfiguration, self).__init__(module)
 
@@ -152,6 +154,7 @@ class CliConfiguration(ConfigBase):
 
 
 class NCConfiguration(ConfigBase):
+
     def __init__(self, module):
         super(NCConfiguration, self).__init__(module)
         self._banners_meta = collections.OrderedDict()

@@ -176,6 +176,7 @@ meta_args = dict(
 
 
 class VdirectFile(object):
+
     def __init__(self, params):
         self.client = rest_client.RestClient(params['vdirect_ip'],
                                              params['vdirect_user'],

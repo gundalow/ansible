@@ -195,6 +195,7 @@ meta_args = dict(
 
 
 class RunnableException(Exception):
+
     def __init__(self, reason, details):
         self.reason = reason
         self.details = details
@@ -204,12 +205,14 @@ class RunnableException(Exception):
 
 
 class WrongActionNameException(RunnableException):
+
     def __init__(self, action, available_actions):
         super(WrongActionNameException, self).__init__('Wrong action name ' + repr(action),
                                                        'Available actions are: ' + repr(available_actions))
 
 
 class MissingActionParametersException(RunnableException):
+
     def __init__(self, required_parameters):
         super(MissingActionParametersException, self).__init__(
             'Action parameters missing',
@@ -217,6 +220,7 @@ class MissingActionParametersException(RunnableException):
 
 
 class MissingRunnableException(RunnableException):
+
     def __init__(self, name):
         super(MissingRunnableException, self).__init__(
             'Runnable missing',

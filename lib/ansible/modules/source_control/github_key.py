@@ -93,6 +93,7 @@ API_BASE = 'https://api.github.com'
 
 
 class GitHubResponse(object):
+
     def __init__(self, response, info):
         self.content = response.read()
         self.info = info
@@ -111,6 +112,7 @@ class GitHubResponse(object):
 
 
 class GitHubSession(object):
+
     def __init__(self, module, token):
         self.module = module
         self.token = token

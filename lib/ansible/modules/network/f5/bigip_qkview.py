@@ -207,6 +207,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -239,6 +240,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
@@ -342,6 +344,7 @@ class BaseManager(object):
 
 
 class BulkLocationManager(BaseManager):
+
     def __init__(self, client):
         super(BulkLocationManager, self).__init__(client)
         self.remote_dir = '/var/config/rest/bulk'
@@ -368,6 +371,7 @@ class BulkLocationManager(BaseManager):
 
 
 class MadmLocationManager(BaseManager):
+
     def __init__(self, client):
         super(MadmLocationManager, self).__init__(client)
         self.remote_dir = '/var/config/rest/madm'
@@ -394,6 +398,7 @@ class MadmLocationManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

@@ -174,6 +174,7 @@ def request(url, data=None, headers=None, method='GET', use_proxy=True,
 
 
 class SnapshotGroup(object):
+
     def __init__(self):
 
         argument_spec = basic_auth_argument_spec()

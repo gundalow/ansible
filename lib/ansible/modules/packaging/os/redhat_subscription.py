@@ -242,6 +242,7 @@ SUBMAN_CMD = None
 
 
 class RegistrationBase(object):
+
     def __init__(self, module, username=None, password=None):
         self.module = module
         self.username = username
@@ -289,6 +290,7 @@ class RegistrationBase(object):
 
 
 class Rhsm(RegistrationBase):
+
     def __init__(self, module, username=None, password=None):
         RegistrationBase.__init__(self, module, username, password)
         self.config = self._read_config()

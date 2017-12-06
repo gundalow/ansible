@@ -132,6 +132,7 @@ except ImportError:
 
 
 class Npm(object):
+
     def __init__(self, module, **kwargs):
         self.module = module
         self.glbl = kwargs['glbl']

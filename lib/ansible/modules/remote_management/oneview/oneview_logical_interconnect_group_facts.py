@@ -84,6 +84,7 @@ from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class LogicalInterconnectGroupFactsModule(OneViewModuleBase):
+
     def __init__(self):
 
         argument_spec = dict(

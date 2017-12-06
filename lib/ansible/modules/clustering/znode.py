@@ -174,6 +174,7 @@ def check_params(params):
 
 
 class KazooCommandProxy():
+
     def __init__(self, module):
         self.module = module
         self.zk = KazooClient(module.params['hosts'])

@@ -251,6 +251,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -276,6 +277,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -387,6 +389,7 @@ class BaseManager(object):
 
 
 class UntypedManager(BaseManager):
+
     def exists(self):
         return self.client.api.tm.gtm.wideips.wideip.exists(
             name=self.want.name,
@@ -427,6 +430,7 @@ class UntypedManager(BaseManager):
 
 
 class TypedManager(BaseManager):
+
     def __init__(self, client):
         super(TypedManager, self).__init__(client)
         if self.want.type is None:
@@ -491,6 +495,7 @@ class TypedManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         deprecated = [
             'return_to_dns', 'null', 'round_robin', 'static_persist',

@@ -540,6 +540,7 @@ DEFAULT_PORTS = {
 
 
 class RDSException(Exception):
+
     def __init__(self, exc):
         if hasattr(exc, 'error_message') and exc.error_message:
             self.message = exc.error_message
@@ -553,6 +554,7 @@ class RDSException(Exception):
 
 
 class RDSConnection:
+
     def __init__(self, module, region, **aws_connect_params):
         try:
             self.connection = connect_to_aws(boto.rds, region, **aws_connect_params)
@@ -639,6 +641,7 @@ class RDSConnection:
 
 
 class RDS2Connection:
+
     def __init__(self, module, region, **aws_connect_params):
         try:
             self.connection = connect_to_aws(boto.rds2, region, **aws_connect_params)
@@ -743,6 +746,7 @@ class RDS2Connection:
 
 
 class RDSDBInstance:
+
     def __init__(self, dbinstance):
         self.instance = dbinstance
         self.name = dbinstance.id
@@ -786,6 +790,7 @@ class RDSDBInstance:
 
 
 class RDS2DBInstance:
+
     def __init__(self, dbinstance):
         self.instance = dbinstance
         if 'DBInstanceIdentifier' not in dbinstance:
@@ -875,6 +880,7 @@ class RDS2DBInstance:
 
 
 class RDSSnapshot:
+
     def __init__(self, snapshot):
         self.snapshot = snapshot
         self.name = snapshot.id
@@ -898,6 +904,7 @@ class RDSSnapshot:
 
 
 class RDS2Snapshot:
+
     def __init__(self, snapshot):
         if 'DeleteDBSnapshotResponse' in snapshot:
             self.snapshot = snapshot['DeleteDBSnapshotResponse']['DeleteDBSnapshotResult']['DBSnapshot']

@@ -204,6 +204,7 @@ class Crypttab(object):
 
 
 class Line(object):
+
     def __init__(self, line=None, name=None, backing_device=None, password=None, opts=None):
         self.line = line
         self.name = name

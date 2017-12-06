@@ -184,6 +184,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
@@ -318,6 +319,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

@@ -103,6 +103,7 @@ from ansible.module_utils._text import to_native
 
 
 class GitLabGroup(object):
+
     def __init__(self, module, git):
         self._module = module
         self._gitlab = git

@@ -232,6 +232,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class Changes(Parameters):
+
     @property
     def enabled(self):
         if self._values['enabled'] in BOOLEANS_TRUE:
@@ -241,6 +242,7 @@ class Changes(Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -384,6 +386,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

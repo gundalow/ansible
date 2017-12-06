@@ -107,6 +107,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class Subversion(object):
+
     def __init__(self, module, dest, repo, revision, username, password, svn_path):
         self.module = module
         self.dest = dest

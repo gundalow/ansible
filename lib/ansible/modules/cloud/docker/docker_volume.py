@@ -108,6 +108,7 @@ from ansible.module_utils.six import iteritems, text_type
 
 
 class TaskParameters(DockerBaseClass):
+
     def __init__(self, client):
         super(TaskParameters, self).__init__()
         self.client = client

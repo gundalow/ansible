@@ -291,6 +291,7 @@ import time
 
 
 class JenkinsPlugin(object):
+
     def __init__(self, module):
         # To be able to call fail_json
         self.module = module

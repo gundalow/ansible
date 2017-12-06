@@ -145,6 +145,7 @@ def build_kwargs(registry_id):
 
 
 class EcsEcr:
+
     def __init__(self, module):
         region, ec2_url, aws_connect_kwargs = \
             get_aws_connection_info(module, boto3=True)

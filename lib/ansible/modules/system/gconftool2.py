@@ -85,6 +85,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class GConf2Preference(object):
+
     def __init__(self, ansible, key, value_type, value,
                  direct=False, config_source=""):
         self.ansible = ansible

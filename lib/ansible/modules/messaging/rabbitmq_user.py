@@ -128,6 +128,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class RabbitMqUser(object):
+
     def __init__(self, module, username, password, tags, permissions,
                  node, bulk_permissions=False):
         self.module = module

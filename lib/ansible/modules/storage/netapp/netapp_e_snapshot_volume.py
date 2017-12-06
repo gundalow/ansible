@@ -149,6 +149,7 @@ def request(url, data=None, headers=None, method='GET', use_proxy=True,
 
 
 class SnapshotVolume(object):
+
     def __init__(self):
         argument_spec = basic_auth_argument_spec()
         argument_spec.update(dict(

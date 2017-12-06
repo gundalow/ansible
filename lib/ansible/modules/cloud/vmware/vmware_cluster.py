@@ -87,6 +87,7 @@ from ansible.module_utils.vmware import (HAS_PYVMOMI,
 
 
 class VMwareCluster(object):
+
     def __init__(self, module):
         self.module = module
         self.cluster_name = module.params['cluster_name']

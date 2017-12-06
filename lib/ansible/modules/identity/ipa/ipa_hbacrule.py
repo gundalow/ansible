@@ -138,6 +138,7 @@ from ansible.module_utils._text import to_native
 
 
 class HBACRuleIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(HBACRuleIPAClient, self).__init__(module, host, port, protocol)
 

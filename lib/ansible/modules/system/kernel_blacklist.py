@@ -50,6 +50,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class Blacklist(object):
+
     def __init__(self, module, filename, checkmode):
         self.filename = filename
         self.module = module

@@ -135,6 +135,7 @@ def ifilter(predicate, iterable):
 
 
 class NetAppESeriesVolume(object):
+
     def __init__(self):
         self._size_unit_map = dict(
             bytes=1,

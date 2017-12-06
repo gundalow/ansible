@@ -99,6 +99,7 @@ from ansible.module_utils.vmware import PyVmomi, vmware_argument_spec
 
 
 class PyVmomiHelper(PyVmomi):
+
     def __init__(self, module):
         super(PyVmomiHelper, self).__init__(module)
 

@@ -144,6 +144,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class Zone(object):
+
     def __init__(self, module):
         self.changed = False
         self.msg = []

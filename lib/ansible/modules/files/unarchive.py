@@ -730,6 +730,7 @@ class TgzArchive(object):
 
 # Class to handle tar files that aren't compressed
 class TarArchive(TgzArchive):
+
     def __init__(self, src, dest, file_args, module):
         super(TarArchive, self).__init__(src, dest, file_args, module)
         # argument to tar
@@ -738,6 +739,7 @@ class TarArchive(TgzArchive):
 
 # Class to handle bzip2 compressed tar files
 class TarBzipArchive(TgzArchive):
+
     def __init__(self, src, dest, file_args, module):
         super(TarBzipArchive, self).__init__(src, dest, file_args, module)
         self.zipflag = '-j'
@@ -745,6 +747,7 @@ class TarBzipArchive(TgzArchive):
 
 # Class to handle xz compressed tar files
 class TarXzArchive(TgzArchive):
+
     def __init__(self, src, dest, file_args, module):
         super(TarXzArchive, self).__init__(src, dest, file_args, module)
         self.zipflag = '-J'

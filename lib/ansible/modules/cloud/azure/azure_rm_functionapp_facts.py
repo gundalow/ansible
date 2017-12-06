@@ -114,6 +114,7 @@ from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 
 class AzureRMFunctionAppFacts(AzureRMModuleBase):
+
     def __init__(self):
 
         self.module_arg_spec = dict(
