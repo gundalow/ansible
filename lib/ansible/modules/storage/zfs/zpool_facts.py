@@ -119,6 +119,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class ZPoolFacts(object):
+
     def __init__(self, module):
 
         self.module = module

@@ -164,6 +164,7 @@ from ansible.module_utils._text import to_native
 
 
 class LdapEntry(object):
+
     def __init__(self, module):
         # Shortcuts
         self.module = module

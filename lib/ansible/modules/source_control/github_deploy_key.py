@@ -172,6 +172,7 @@ from ansible.module_utils.urls import fetch_url
 
 
 class GithubDeployKey(object):
+
     def __init__(self, module=None, url=None, state=None, username=None, password=None, token=None, otp=None):
         self.module = module
         self.url = url

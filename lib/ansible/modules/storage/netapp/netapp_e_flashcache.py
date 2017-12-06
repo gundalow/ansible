@@ -132,6 +132,7 @@ def request(url, data=None, headers=None, method='GET', use_proxy=True,
 
 
 class NetAppESeriesFlashCache(object):
+
     def __init__(self):
         self.name = None
         self.log_mode = None

@@ -122,9 +122,9 @@ def main():
 
     argument_spec = vmware_argument_spec()
     argument_spec.update(dict(portgroup_name=dict(required=True, type='str'),
-                         switch_name=dict(required=True, type='str'),
-                         vlan_id=dict(required=True, type='int'),
-                         network_policy=dict(required=False, type='dict', default={})))
+                              switch_name=dict(required=True, type='str'),
+                              vlan_id=dict(required=True, type='int'),
+                              network_policy=dict(required=False, type='dict', default={})))
 
     module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
 

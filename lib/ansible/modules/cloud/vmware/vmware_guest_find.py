@@ -90,6 +90,7 @@ except ImportError:
 
 
 class PyVmomiHelper(object):
+
     def __init__(self, module):
         if not HAS_PYVMOMI:
             module.fail_json(msg='pyvmomi module required')
@@ -156,7 +157,6 @@ class PyVmomiHelper(object):
         return tree
 
     def _build_folder_map(self, folder, inpath='/'):
-
         """ Build a searchable index for vms+uuids+folders """
         if isinstance(folder, tuple):
             folder = folder[1]

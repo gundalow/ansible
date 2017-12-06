@@ -184,6 +184,7 @@ except ImportError:
 
 
 class Parameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         self._values = defaultdict(lambda: None)
         if params:
@@ -314,6 +315,7 @@ class ComplexParameters(Parameters):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -386,6 +388,7 @@ class BaseManager(object):
 
 
 class SimpleManager(BaseManager):
+
     def __init__(self, client):
         super(SimpleManager, self).__init__(client)
         self.want = SimpleParameters(self.client.module.params)
@@ -519,6 +522,7 @@ class SimpleManager(BaseManager):
 
 
 class ComplexManager(BaseManager):
+
     def __init__(self, client):
         super(ComplexManager, self).__init__(client)
         self.want = ComplexParameters(self.client.module.params)
@@ -760,6 +764,7 @@ class ComplexChanges(ComplexParameters):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -787,6 +792,7 @@ class Difference(object):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -812,6 +818,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

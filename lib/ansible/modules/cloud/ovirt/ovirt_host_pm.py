@@ -134,6 +134,7 @@ from ansible.module_utils.ovirt import (
 
 
 class HostModule(BaseModule):
+
     def build_entity(self):
         return otypes.Host(
             power_management=otypes.PowerManagement(

@@ -121,6 +121,7 @@ class AnsibleF5ClientStub(AnsibleF5Client):
     the result will replace this work here.
 
     """
+
     def __init__(self, argument_spec=None, supports_check_mode=False,
                  mutually_exclusive=None, required_together=None,
                  required_if=None, required_one_of=None, add_file_common_args=False,
@@ -245,6 +246,7 @@ class Changes(Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -384,6 +386,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

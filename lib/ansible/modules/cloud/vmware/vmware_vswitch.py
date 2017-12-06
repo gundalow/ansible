@@ -124,6 +124,7 @@ def find_vswitch_by_name(host, vswitch_name):
 
 
 class VMwareHostVirtualSwitch(PyVmomi):
+
     def __init__(self, module):
         super(VMwareHostVirtualSwitch, self).__init__(module)
         self.host_system = None

@@ -217,6 +217,7 @@ from ansible.module_utils.vmware import PyVmomi, list_snapshots, vmware_argument
 
 
 class PyVmomiHelper(PyVmomi):
+
     def __init__(self, module):
         super(PyVmomiHelper, self).__init__(module)
 

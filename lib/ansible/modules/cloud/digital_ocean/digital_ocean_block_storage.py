@@ -119,6 +119,7 @@ class DOBlockStorageException(Exception):
 
 
 class DOBlockStorage(object):
+
     def __init__(self, module):
         self.module = module
         self.rest = DigitalOceanHelper(module)

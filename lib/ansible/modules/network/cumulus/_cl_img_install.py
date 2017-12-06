@@ -187,7 +187,6 @@ def check_fw_print_env(module, slot_num):
                 return m0.group(1)
 
 
-
 def get_primary_slot_num(module):
     cmd = None
     if platform.machine() == 'ppc':

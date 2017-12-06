@@ -109,6 +109,7 @@ from ansible.module_utils._text import to_native
 
 
 class DNSRecordIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(DNSRecordIPAClient, self).__init__(module, host, port, protocol)
 

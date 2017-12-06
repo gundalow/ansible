@@ -167,6 +167,7 @@ except ImportError:
 
 
 class BigIpSysGlobalManager(object):
+
     def __init__(self, *args, **kwargs):
         self.changed_params = dict()
         self.params = kwargs
@@ -341,6 +342,7 @@ class BigIpSysGlobalManager(object):
 
 
 class BigIpSysGlobalModuleConfig(object):
+
     def __init__(self):
         self.argument_spec = dict()
         self.meta_args = dict()

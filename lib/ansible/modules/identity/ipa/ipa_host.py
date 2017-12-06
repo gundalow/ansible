@@ -145,6 +145,7 @@ from ansible.module_utils._text import to_native
 
 
 class HostIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(HostIPAClient, self).__init__(module, host, port, protocol)
 

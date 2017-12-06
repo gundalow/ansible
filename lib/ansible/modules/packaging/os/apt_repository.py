@@ -157,6 +157,7 @@ class InvalidSource(Exception):
 # Simple version of aptsources.sourceslist.SourcesList.
 # No advanced logic and no backups inside.
 class SourcesList(object):
+
     def __init__(self, module):
         self.module = module
         self.files = {}  # group sources by file

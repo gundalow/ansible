@@ -222,6 +222,7 @@ class NonNetworkedParameters(Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -249,6 +250,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -350,6 +352,7 @@ class BaseManager(object):
 
 
 class NetworkedManager(BaseManager):
+
     def __init__(self, client):
         super(NetworkedManager, self).__init__(client)
         self.required_resources = [
@@ -400,6 +403,7 @@ class NetworkedManager(BaseManager):
 
 
 class NonNetworkedManager(BaseManager):
+
     def __init__(self, client):
         super(NonNetworkedManager, self).__init__(client)
         self.required_resources = [
@@ -439,6 +443,7 @@ class NonNetworkedManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

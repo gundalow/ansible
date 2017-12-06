@@ -81,6 +81,7 @@ from ansible.module_utils.vmware import (HAS_PYVMOMI, connect_to_api, find_dvs_b
 
 
 class VMwareDvsHost(object):
+
     def __init__(self, module):
         self.module = module
         self.dv_switch = None
@@ -234,9 +235,9 @@ def main():
 
     argument_spec = vmware_argument_spec()
     argument_spec.update(dict(esxi_hostname=dict(required=True, type='str'),
-                         switch_name=dict(required=True, type='str'),
-                         vmnics=dict(required=True, type='list'),
-                         state=dict(default='present', choices=['present', 'absent'], type='str')))
+                              switch_name=dict(required=True, type='str'),
+                              vmnics=dict(required=True, type='list'),
+                              state=dict(default='present', choices=['present', 'absent'], type='str')))
 
     module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
 

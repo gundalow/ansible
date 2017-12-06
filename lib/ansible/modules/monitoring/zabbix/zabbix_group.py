@@ -87,6 +87,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class HostGroup(object):
+
     def __init__(self, module, zbx):
         self._module = module
         self._zapi = zbx

@@ -258,6 +258,7 @@ except ImportError:
 
 
 class VPNConnectionException(Exception):
+
     def __init__(self, msg, exception=None, response=None):
         self.msg = msg
         self.error_traceback = exception

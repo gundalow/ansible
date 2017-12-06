@@ -588,6 +588,7 @@ def main():
 
 
 class Wrapper(object):
+
     def __init__(self, obj, wait_timeout):
         self.other = obj
         self.wait_timeout = wait_timeout

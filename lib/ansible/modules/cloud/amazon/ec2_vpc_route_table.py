@@ -152,6 +152,7 @@ except ImportError:
 
 
 class AnsibleRouteTableException(Exception):
+
     def __init__(self, message, error_traceback=None):
         self.message = message
         self.error_traceback = error_traceback

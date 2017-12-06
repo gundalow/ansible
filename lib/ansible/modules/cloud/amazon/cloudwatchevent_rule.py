@@ -131,6 +131,7 @@ from ansible.module_utils.ec2 import ec2_argument_spec, get_aws_connection_info
 
 
 class CloudWatchEventRule(object):
+
     def __init__(self, module, name, client, schedule_expression=None,
                  event_pattern=None, description=None, role_arn=None):
         self.name = name

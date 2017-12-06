@@ -54,6 +54,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class Icinga2FeatureHelper:
+
     def __init__(self, module):
         self.module = module
         self._icinga2 = module.get_bin_path('icinga2', True)
@@ -103,7 +104,7 @@ class Icinga2FeatureHelper:
                 change_applied = True
             # RC is not 0 for this already disabled feature, handle it as no change applied
             elif re.search("Cannot disable feature '%s'. Target file .* does not exist"
-                                             % self.module.params["name"]):
+                           % self.module.params["name"]):
                 change_applied = False
             else:
                 self.module.fail_json(msg="Fail to disable feature. Command returns %s" % out)

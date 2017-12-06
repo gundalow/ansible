@@ -491,6 +491,7 @@ class ApiParameters(Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -639,6 +640,7 @@ class ModuleManager(object):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -742,6 +744,7 @@ class Difference(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

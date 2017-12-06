@@ -89,6 +89,7 @@ from ansible.module_utils.six.moves.urllib.error import HTTPError
 
 
 class VMwareConfigurationBackup(object):
+
     def __init__(self, module):
         self.module = module
         self.state = self.module.params['state']

@@ -345,6 +345,7 @@ class Changes(Parameters):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -378,6 +379,7 @@ class Difference(object):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -415,6 +417,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -515,6 +518,7 @@ class BaseManager(object):
 
 
 class TypedManager(BaseManager):
+
     def __init__(self, client):
         super(TypedManager, self).__init__(client)
         if self.want.type is None:
@@ -594,6 +598,7 @@ class TypedManager(BaseManager):
 
 
 class UntypedManager(BaseManager):
+
     def exists(self):
         result = self.client.api.tm.gtm.pools.pool.exists(
             name=self.want.name,
@@ -634,6 +639,7 @@ class UntypedManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.states = ['absent', 'present', 'enabled', 'disabled']
         self.preferred_lb_methods = [

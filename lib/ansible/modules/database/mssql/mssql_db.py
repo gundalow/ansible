@@ -126,6 +126,7 @@ def db_delete(conn, cursor, db):
     cursor.execute("DROP DATABASE [%s]" % db)
     return not db_exists(conn, cursor, db)
 
+
 def db_import(conn, cursor, module, db, target):
     if os.path.isfile(target):
         backup = open(target, 'r')

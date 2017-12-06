@@ -90,6 +90,7 @@ import json
 
 
 class RundeckProjectManager(object):
+
     def __init__(self, module):
         self.module = module
 

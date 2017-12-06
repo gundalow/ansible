@@ -182,6 +182,7 @@ from ansible.module_utils.vmware import (HAS_PYVMOMI, connect_to_api, find_dvs_b
 
 
 class VMwareDvsPortgroup(object):
+
     def __init__(self, module):
         self.module = module
         self.dvs_portgroup = None

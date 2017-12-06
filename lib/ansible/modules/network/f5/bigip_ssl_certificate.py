@@ -189,6 +189,7 @@ except ImportError:
 
 
 class Parameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         super(Parameters, self).__init__(params)
         self._values['__warnings'] = []
@@ -342,6 +343,7 @@ class CertParameters(Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -449,6 +451,7 @@ class BaseManager(object):
 
 
 class CertificateManager(BaseManager):
+
     def __init__(self, client):
         super(CertificateManager, self).__init__(client)
         self.want = CertParameters(self.client.module.params)
@@ -546,6 +549,7 @@ class CertificateManager(BaseManager):
 
 
 class KeyManager(BaseManager):
+
     def __init__(self, client):
         super(KeyManager, self).__init__(client)
         self.want = KeyParameters(self.client.module.params)
@@ -643,6 +647,7 @@ class KeyManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

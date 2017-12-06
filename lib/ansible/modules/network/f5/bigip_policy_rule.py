@@ -288,6 +288,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ApiParameters(Parameters):
+
     def _remove_internal_keywords(self, resource):
         items = ['kind', 'generation', 'selfLink', 'poolReference']
         for item in items:
@@ -344,6 +345,7 @@ class ApiParameters(Parameters):
 
 
 class ModuleParameters(Parameters):
+
     @property
     def actions(self):
         result = []
@@ -447,6 +449,7 @@ class ModuleParameters(Parameters):
 
 
 class Changes(Parameters):
+
     def to_return(self):
         result = {}
         try:
@@ -500,6 +503,7 @@ class ReportableChanges(Changes):
 
 
 class UsableChanges(Changes):
+
     @property
     def actions(self):
         if self._values['actions'] is None:
@@ -613,6 +617,7 @@ class Difference(object):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = ModuleParameters(params=self.client.module.params)
@@ -822,6 +827,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

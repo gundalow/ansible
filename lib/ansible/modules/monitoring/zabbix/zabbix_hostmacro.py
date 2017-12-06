@@ -71,6 +71,7 @@ try:
     # Extend the ZabbixAPI
     # Since the zabbix-api python module too old (version 1.0, no higher version so far).
     class ZabbixAPIExtends(ZabbixAPI):
+
         def __init__(self, server, timeout, user, passwd, **kwargs):
             ZabbixAPI.__init__(self, server, timeout=timeout, user=user, passwd=passwd)
 
@@ -82,6 +83,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class HostMacro(object):
+
     def __init__(self, module, zbx):
         self._module = module
         self._zapi = zbx

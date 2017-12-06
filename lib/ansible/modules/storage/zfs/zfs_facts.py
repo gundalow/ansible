@@ -170,6 +170,7 @@ SUPPORTED_TYPES = ['all', 'filesystem', 'volume', 'snapshot', 'bookmark']
 
 
 class ZFSFacts(object):
+
     def __init__(self, module):
 
         self.module = module

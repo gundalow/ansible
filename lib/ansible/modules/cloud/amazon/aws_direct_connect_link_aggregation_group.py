@@ -162,6 +162,7 @@ except:
 
 
 class DirectConnectError(Exception):
+
     def __init__(self, msg, last_traceback, response):
         self.msg = msg
         self.last_traceback = last_traceback

@@ -123,6 +123,7 @@ def select(predicate, iterable):
 
 class GroupBy(object):
     # python 2, 3 generic grouping.
+
     def __init__(self, iterable, key=None):
         if key is None:
             key = lambda x: x
@@ -148,6 +149,7 @@ class GroupBy(object):
 
 
 class NetAppESeriesStoragePool(object):
+
     def __init__(self):
         self._sp_drives_cached = None
 

@@ -89,6 +89,7 @@ from ansible.module_utils._text import to_native
 
 
 class DNSZoneIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(DNSZoneIPAClient, self).__init__(module, host, port, protocol)
 

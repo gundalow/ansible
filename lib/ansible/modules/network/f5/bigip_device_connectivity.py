@@ -322,6 +322,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class Changes(Parameters):
+
     def to_return(self):
         result = {}
         try:
@@ -360,6 +361,7 @@ class ReportableChanges(Changes):
 
 
 class UsableChanges(Changes):
+
     @property
     def mirror_primary_address(self):
         if self._values['mirror_primary_address'] == ['any6', 'none', 'any']:
@@ -391,6 +393,7 @@ class UsableChanges(Changes):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -459,6 +462,7 @@ class Difference(object):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
@@ -537,6 +541,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

@@ -324,6 +324,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -358,6 +359,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -506,6 +508,7 @@ class BaseManager(object):
 
 
 class UnparitionedManager(BaseManager):
+
     def create_on_device(self):
         params = self.want.api_params()
         self.client.api.tm.auth.users.user.create(**params)
@@ -530,6 +533,7 @@ class UnparitionedManager(BaseManager):
 
 
 class PartitionedManager(BaseManager):
+
     def create_on_device(self):
         params = self.want.api_params()
         self.client.api.tm.auth.users.user.create(
@@ -596,6 +600,7 @@ class PartitionedManager(BaseManager):
 
 
 class RootUserManager(BaseManager):
+
     def exec_module(self):
         changed = False
         result = dict()
@@ -644,6 +649,7 @@ class RootUserManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

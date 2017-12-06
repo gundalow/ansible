@@ -187,6 +187,7 @@ CONFIG_PARAMS = [
 
 
 class LXDProfileManagement(object):
+
     def __init__(self, module):
         """Management of LXC containers via Ansible.
 

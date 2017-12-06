@@ -210,6 +210,7 @@ meta_args = dict(
 
 
 class CommitException(Exception):
+
     def __init__(self, reason, details):
         self.reason = reason
         self.details = details
@@ -219,6 +220,7 @@ class CommitException(Exception):
 
 
 class MissingDeviceException(CommitException):
+
     def __init__(self, device_name):
         super(MissingDeviceException, self).__init__(
             'Device missing',
@@ -226,6 +228,7 @@ class MissingDeviceException(CommitException):
 
 
 class VdirectCommit(object):
+
     def __init__(self, params):
         self.client = rest_client.RestClient(params['vdirect_ip'],
                                              params['vdirect_user'],

@@ -75,6 +75,7 @@ from ansible.module_utils._text import to_native
 
 
 class NailGun(object):
+
     def __init__(self, server, entities, module):
         self._server = server
         self._entities = entities

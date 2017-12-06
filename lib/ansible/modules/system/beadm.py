@@ -150,6 +150,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class BE(object):
+
     def __init__(self, module):
         self.module = module
 

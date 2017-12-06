@@ -234,6 +234,7 @@ except ImportError:
 
 
 class Parameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         self._values = defaultdict(lambda: None)
         if params:
@@ -320,6 +321,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class V1Parameters(Parameters):
+
     @property
     def template(self):
         if self._values['template'] is None:
@@ -364,6 +366,7 @@ class V1Parameters(Parameters):
 
 
 class V2Parameters(Parameters):
+
     @property
     def template(self):
         if self._values['template'] is None:
@@ -409,6 +412,7 @@ class V2Parameters(Parameters):
 
 
 class Changes(Parameters):
+
     @property
     def template(self):
         if self._values['template'] is None:
@@ -454,6 +458,7 @@ class Changes(Parameters):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -483,6 +488,7 @@ class Difference(object):
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -710,6 +716,7 @@ class BaseManager(object):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -735,6 +742,7 @@ class ModuleManager(object):
 
 
 class V1Manager(BaseManager):
+
     def __init__(self, client):
         super(V1Manager, self).__init__(client)
         self.want = V1Parameters()
@@ -743,6 +751,7 @@ class V1Manager(BaseManager):
 
 
 class V2Manager(BaseManager):
+
     def __init__(self, client):
         super(V2Manager, self).__init__(client)
         self.want = V2Parameters()
@@ -751,6 +760,7 @@ class V2Manager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.template_map = [
             'ActiveSync v1.0 v2.0 (http)',

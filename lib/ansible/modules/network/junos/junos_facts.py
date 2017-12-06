@@ -243,6 +243,7 @@ class Interfaces(FactsBase):
 
 
 class Facts(FactsBase):
+
     def _connect(self, module):
         host = get_param(module, 'host')
 

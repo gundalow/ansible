@@ -133,6 +133,7 @@ from ansible.module_utils import urls
 
 
 class ApiEndpoint(object):
+
     def __init__(self, host, port, api, version):
         self.host = host
         self.port = port
@@ -152,6 +153,7 @@ class ApiEndpoint(object):
 
 
 class ResourceEndpoint(ApiEndpoint):
+
     def __init__(self, name, namespaced, api_endpoint):
         super(ResourceEndpoint, self).__init__(api_endpoint.host,
                                                api_endpoint.port,
@@ -162,6 +164,7 @@ class ResourceEndpoint(ApiEndpoint):
 
 
 class NamedResource(object):
+
     def __init__(self, module, definition, resource_endpoint):
         self.module = module
         self.set_definition(definition)
@@ -204,6 +207,7 @@ class NamedResource(object):
 
 
 class OC(object):
+
     def __init__(self, module, token, host, port,
                  apis=None):
         apis = ['api', 'oapi'] if apis is None else apis

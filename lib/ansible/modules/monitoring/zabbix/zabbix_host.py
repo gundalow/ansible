@@ -233,6 +233,7 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class Host(object):
+
     def __init__(self, module, zbx):
         self._module = module
         self._zapi = zbx

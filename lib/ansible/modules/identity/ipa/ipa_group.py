@@ -108,6 +108,7 @@ from ansible.module_utils._text import to_native
 
 
 class GroupIPAClient(IPAClient):
+
     def __init__(self, module, host, port, protocol):
         super(GroupIPAClient, self).__init__(module, host, port, protocol)
 

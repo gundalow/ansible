@@ -91,6 +91,7 @@ from ansible.module_utils.vmware import (
 
 
 class VMwareHost(object):
+
     def __init__(self, module):
         self.module = module
         self.datacenter_name = module.params['datacenter_name']

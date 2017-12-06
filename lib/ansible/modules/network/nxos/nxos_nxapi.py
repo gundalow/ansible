@@ -130,6 +130,7 @@ from ansible.module_utils.network.nxos.nxos import check_args as nxos_check_args
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six import iteritems
 
+
 def check_args(module, warnings):
     provider = module.params['provider']
     if provider['transport'] == 'nxapi':
@@ -158,6 +159,7 @@ def check_args(module, warnings):
                 module.fail_json(msg='%s must be between 1 and 65535' % key)
 
     return warnings
+
 
 def map_obj_to_commands(want, have, module):
     commands = list()
@@ -191,6 +193,7 @@ def map_obj_to_commands(want, have, module):
 
     return commands
 
+
 def parse_http(data):
     http_res = [r'nxapi http port (\d+)']
     http_port = None
@@ -202,6 +205,7 @@ def parse_http(data):
             break
 
     return {'http': http_port is not None, 'http_port': http_port}
+
 
 def parse_https(data):
     https_res = [r'nxapi https port (\d+)']
@@ -215,12 +219,14 @@ def parse_https(data):
 
     return {'https': https_port is not None, 'https_port': https_port}
 
+
 def parse_sandbox(data):
     sandbox = [item for item in data.split('\n') if re.search(r'.*sandbox.*', item)]
     value = False
     if sandbox and sandbox[0] == 'nxapi sandbox':
         value = True
     return {'sandbox': value}
+
 
 def map_config_to_obj(module):
     out = run_commands(module, ['show run all | inc nxapi'], check_rc=False)[0]
@@ -240,6 +246,7 @@ def map_config_to_obj(module):
 
     return obj
 
+
 def map_params_to_obj(module):
     obj = {
         'http': module.params['http'],
@@ -251,6 +258,7 @@ def map_params_to_obj(module):
     }
 
     return obj
+
 
 def main():
     """ main entry point for module execution
@@ -274,8 +282,6 @@ def main():
 
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
-
-
 
     warnings = list()
     check_args(module, warnings)

@@ -190,6 +190,7 @@ except ImportError:
 
 
 class Parameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         self._values = defaultdict(lambda: None)
         self._values['__warnings'] = []
@@ -499,6 +500,7 @@ class ParametersHalfOpen(Parameters):
 
 
 class Difference(object):
+
     def __init__(self, want, have=None):
         self.want = want
         self.have = have
@@ -548,9 +550,9 @@ class Difference(object):
                 )
         elif self.want.timeout is not None:
             if self.have.interval >= self.want.timeout:
-                    raise F5ModuleError(
-                        "Parameter 'interval' must be less than 'timeout'."
-                    )
+                raise F5ModuleError(
+                    "Parameter 'interval' must be less than 'timeout'."
+                )
         elif self.want.interval is not None:
             if self.want.interval >= self.have.timeout:
                 raise F5ModuleError(
@@ -571,6 +573,7 @@ class Difference(object):
 
 # TODO: Remove all of this in 2.5
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
 
@@ -589,6 +592,7 @@ class ModuleManager(object):
 
 
 class BaseManager(object):
+
     def _announce_deprecations(self):
         warnings = []
         if self.want:
@@ -664,6 +668,7 @@ class BaseManager(object):
 
 
 class TcpManager(BaseManager):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -747,6 +752,7 @@ class TcpManager(BaseManager):
 
 # TODO: Remove this in 2.5 and put it its own module
 class TcpEchoManager(BaseManager):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -828,6 +834,7 @@ class TcpEchoManager(BaseManager):
 
 # TODO: Remove this in 2.5 and put it its own module
 class TcpHalfOpenManager(BaseManager):
+
     def __init__(self, client):
         self.client = client
         self.have = None
@@ -910,6 +917,7 @@ class TcpHalfOpenManager(BaseManager):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(

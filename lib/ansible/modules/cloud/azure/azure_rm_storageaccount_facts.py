@@ -110,6 +110,7 @@ AZURE_OBJECT_CLASS = 'StorageAccount'
 
 
 class AzureRMStorageAccountFacts(AzureRMModuleBase):
+
     def __init__(self):
 
         self.module_arg_spec = dict(

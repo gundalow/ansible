@@ -107,6 +107,7 @@ except ImportError:
 
 
 class PyVmomiHelper(object):
+
     def __init__(self, module):
         if not HAS_PYVMOMI:
             module.fail_json(msg='pyvmomi module required')

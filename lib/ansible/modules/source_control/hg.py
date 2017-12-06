@@ -95,6 +95,7 @@ from ansible.module_utils._text import to_native
 
 
 class Hg(object):
+
     def __init__(self, module, dest, repo, revision, hg_path):
         self.module = module
         self.dest = dest

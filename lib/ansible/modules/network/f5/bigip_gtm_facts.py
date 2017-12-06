@@ -195,6 +195,7 @@ except ImportError:
 
 
 class BaseManager(object):
+
     def __init__(self, client):
         self.client = client
         self.types = dict(
@@ -241,6 +242,7 @@ class BaseManager(object):
 
 
 class UntypedManager(BaseManager):
+
     def exec_module(self):
         results = []
         facts = self.read_facts()
@@ -252,6 +254,7 @@ class UntypedManager(BaseManager):
 
 
 class TypedManager(BaseManager):
+
     def exec_module(self):
         results = []
         for collection, type in iteritems(self.types):
@@ -269,6 +272,7 @@ class TypedManager(BaseManager):
 
 
 class Parameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         super(Parameters, self).__init__(params)
         self._values['__warnings'] = []
@@ -297,6 +301,7 @@ class Parameters(AnsibleF5Parameters):
 
 
 class BaseParameters(AnsibleF5Parameters):
+
     def __init__(self, params=None):
         self._values = defaultdict(lambda: None)
         if params:
@@ -697,6 +702,7 @@ class ServerParameters(BaseParameters):
 
 
 class PoolFactManager(BaseManager):
+
     def exec_module(self):
         if self.version_is_less_than_12():
             manager = self.get_manager('untyped')
@@ -714,6 +720,7 @@ class PoolFactManager(BaseManager):
 
 
 class TypedPoolFactManager(TypedManager):
+
     def __init__(self, client):
         super(TypedPoolFactManager, self).__init__(client)
         self.want = PoolParameters(self.client.module.params)
@@ -740,6 +747,7 @@ class TypedPoolFactManager(TypedManager):
 
 
 class UntypedPoolFactManager(UntypedManager):
+
     def __init__(self, client):
         super(UntypedPoolFactManager, self).__init__(client)
         self.want = PoolParameters(self.client.module.params)
@@ -764,6 +772,7 @@ class UntypedPoolFactManager(UntypedManager):
 
 
 class WideIpFactManager(BaseManager):
+
     def exec_module(self):
         if self.version_is_less_than_12():
             manager = self.get_manager('untyped')
@@ -781,6 +790,7 @@ class WideIpFactManager(BaseManager):
 
 
 class TypedWideIpFactManager(TypedManager):
+
     def __init__(self, client):
         super(TypedWideIpFactManager, self).__init__(client)
         self.want = WideIpParameters(self.client.module.params)
@@ -806,6 +816,7 @@ class TypedWideIpFactManager(TypedManager):
 
 
 class UntypedWideIpFactManager(UntypedManager):
+
     def __init__(self, client):
         super(UntypedWideIpFactManager, self).__init__(client)
         self.want = WideIpParameters(self.client.module.params)
@@ -829,6 +840,7 @@ class UntypedWideIpFactManager(UntypedManager):
 
 
 class ServerFactManager(UntypedManager):
+
     def __init__(self, client):
         super(ServerFactManager, self).__init__(client)
         self.want = ServerParameters(self.client.module.params)
@@ -857,6 +869,7 @@ class ServerFactManager(UntypedManager):
 
 
 class ModuleManager(object):
+
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
@@ -919,6 +932,7 @@ class ModuleManager(object):
 
 
 class ArgumentSpec(object):
+
     def __init__(self):
         self.supports_check_mode = False
         self.argument_spec = dict(
