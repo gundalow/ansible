@@ -25,7 +25,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ip_netns
-version_added: 2.5
+version_added: "2.5"
 author: "Arie Bregman (@bregman-arie)"
 short_description: Manage network namespaces
 requirements: [ ip ]
@@ -35,21 +35,21 @@ options:
     name:
         required: false
         description:
-            - Name of the namespace
+            - Name of the namespace.
     state:
         required: false
         default: "present"
         choices: [ present, absent ]
         description:
-            - Whether the namespace should exist
+            - Whether the namespace should exist.
 '''
 
 EXAMPLES = '''
-# Create a namespace named mario
 - name: Create a namespace named mario
   namespace:
     name: mario
     state: present
+
 - name: Delete a namespace named luigi
   namespace:
     name: luigi
