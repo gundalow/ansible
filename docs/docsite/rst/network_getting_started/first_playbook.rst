@@ -7,6 +7,7 @@ Prerequisites
 ```````````````````````````````````````````````````````````````
 
 Before you work through these examples you need:
+
 - Ansible 2.5 (or higher) installed
 - One or more network devices that are compatible with Ansible
 - Basic Linux command line knowledge
@@ -16,12 +17,20 @@ Install Ansible
 ```````````````````````````````````````````````````````````````
 
 Install Ansible:
-   `pip install ansible`
+
+.. code-block:: bash
+
+   pip install ansible
+
 
 Confirm the version of Ansible (must be >= 2.5):
-   `ansible --version`
 
-For other ways to install Ansible, see :doc:`intro_installation`.
+.. code-block:: bash
+
+   ansible --version
+
+
+For other ways to install Ansible, see :doc:`../intro_installation`.
 
 Establish a Manual Connection to a Managed Node
 ```````````````````````````````````````````````````````````````
@@ -37,17 +46,22 @@ To confirm your credentials, connect to a network device manually and retrieve i
 
 For a (? what is an-vyos-02.ansible.eng.rdu2.redhat.com?):
 
-```
+.. code-block:: bash
+
    ssh vyos_user@my-vyos-device.com
    show config
-```
+
 
 Run Your First Network Ansible Command
 ```````````````````````````````````````````````````````````````
 
 Now, repeat that same procedure in Ansible with a single command:
 
-   `ansible 
+.. code-block:: bash
+
+   ansible ???
+
+
 See how your network device is currently configured
 (examples for a number of different devices on a number of different platforms)
 (demonstrate how to find and use the module documentation)

@@ -29,8 +29,6 @@ This guide:
 
    basic_concepts
    network_differences
-
-The guide will continue with these sections:
    first_playbook
    intermediate_concepts
    resources
