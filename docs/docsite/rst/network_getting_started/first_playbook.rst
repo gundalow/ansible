@@ -28,11 +28,12 @@ Establish a Manual Connection to a Managed Node
 
 To confirm your credentials, connect to a network device manually and retrieve its configuration. Replace the sample user and device name with your real credentials. For example, for a (? what is an-veos-02.ansible.eng.rdu2.redhat.com?):
 
-```
+.. code-block:: bash
+
    ssh veos_user@my-veos-device.com
    enable
    show running-config
-```
+
 
 For a (? what is an-vyos-02.ansible.eng.rdu2.redhat.com?):
 
