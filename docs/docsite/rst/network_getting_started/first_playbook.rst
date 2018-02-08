@@ -53,14 +53,16 @@ Instead of manually connecting and running a command on the network device, you 
 
 .. code-block:: bash
 
-   ansible all -i vyos.example.net, -c local -u my_vyos_user -k -m vyos_facts
+   ansible all -i vyos.example.net, -c network_cli -u my_vyos_user -k -m vyos_facts -e ansible_network_os=vyos
 
 The flags in this command set:
-  - the inventory (-i, the device or devices to target - as demonstrated later, this flag can point to an inventory file)
+  - the host group(s) to which the command should apply (in this case, all)
+  - the inventory (-i, the device or devices to target - without the trailing comma -i points to an inventory file)
   - the connection method (-c, the method for connecting and executing ansible)
   - the user (-u, the username for the SSH connection)
   - the SSH password method (-k, please prompt for the password)
-  - the module (-m, the ansible module to run). 
+  - the module (-m, the ansible module to run)
+  - an extra variable ( -e, in this case, setting the network OS value)
 
 
 Create and Run Your First Network Ansible Playbook
@@ -73,38 +75,29 @@ If you want to run this command every day, you can save it in a playbook and run
 .. code-block:: yaml
 
   - name: First Playbook
-    connection: local
-    hosts: vyos_routers
+    connection: network_cli
+    hosts: all
     tasks:
       - name: Get config for VyOS devices 
         vyos_facts:
           gather_subset: all
-          provider:
-            username: ansible
-            password: ansible
       - name: Display the config
         debug:
           msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
 
-2. Save this content in a file called hosts:
+Here you set the group (hosts: all), the connection method (connection: network_cli) and the module (in each task) in the playbook so you can omit them on the command line. The playbook also adds a second task to show the config output. When a module runs in a playbook, the output is held in memory for use by future tasks instead of written to the console. The debug task here lets you see the results in your shell.
 
-.. code-block:: yaml
-
-   [vyos_routers]
-   vyos.example.net
-
-
-3. Run the playbook with the command:
+2. Run the playbook with the command:
 
 .. code-block:: bash
 
-   ansible-playbook -i hosts first_playbook.yml
+   ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos first_playbook.yml
 
 The playbook contains one play with two tasks, and should generate output like this:
 
 .. code-block:: bash
 
-   $ ansible-playbook -i hosts first_playbook.yml 
+   $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos first_playbook.yml
    
    PLAY [First Playbook]
    ***************************************************************************************************************************
@@ -117,27 +110,24 @@ The playbook contains one play with two tasks, and should generate output like t
    ***************************************************************************************************************************
    ok: [vyos.example.net]
    
-   TASK [Display some facts]
+   TASK [Display the config]
    ***************************************************************************************************************************
    ok: [vyos.example.net] => {
        "failed": false, 
        "msg": "The hostname is vyos and the OS is VyOS"
    }
 
-4. Now that you can retrieve the device config, try updating it with Ansible. Update your playbook like this:
+3. Now that you can retrieve the device config, try updating it with Ansible. Update your playbook like this:
 
 .. code-block:: yaml
 
   - name: First Playbook
-    connection: local
-    hosts: vyos_routers
+    connection: network_cli
+    hosts: all
     tasks:
       - name: Get config for VyOS devices 
         vyos_facts:
           gather_subset: all
-          provider:
-            username: ansible
-            password: ansible
       - name: Display the config
         debug:
           msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
@@ -146,24 +136,18 @@ The playbook contains one play with two tasks, and should generate output like t
 	      backup: yes
 	      lines:
 	        - set system host-name vyos-changed
-	      provider:
-	        username: ansible
-	        password: ansible
       - name: Get changed config for VyOS devices 
         vyos_facts:
           gather_subset: all
-          provider:
-            username: ansible
-            password: ansible
       - name: Display the changed config
         debug:
           msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
 
-This playbook now has four tasks in a single play. The output shows you the change you made to the config:
+This playbook now has four tasks in a single play. Run it with the same command you used above. The output shows you the change Ansible made to the config:
 
 .. code-block:: bash
 
-   $ ansible-playbook -i hosts first_playbook.yml 
+   $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos first_playbook.yml 
 
    PLAY [First Playbook]
    ************************************************************************************************************************************
@@ -203,4 +187,4 @@ This playbook now has four tasks in a single play. The output shows you the chan
    vyos.example.net           : ok=6    changed=1    unreachable=0    failed=0   
 
 
-Although this playbook is handy, it has a lot of repetitive information. And running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to expand your inventory, so you can run playbooks against multiple devices.
+This playbook is useful. However, it still requires several command-line flags. Also, running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to use an inventory file to organize your managed nodes into groups with information like the ansible_network_os and the SSH user. 
