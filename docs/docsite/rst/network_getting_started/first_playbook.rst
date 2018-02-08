@@ -1,4 +1,4 @@
-Getting Started: First Command and Playbook
+Network Getting Started: First Command and Playbook
 ======================================================
 
 Put the concepts you learned to work with this quick tutorial. Install Ansible, execute a network configuration command manually, execute the same command with Ansible, then create a playbook so you can execute the command any time on multiple network devices. 

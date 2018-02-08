@@ -1,2 +1,2 @@
-Getting Started: Resources and Next Steps
+Network Getting Started: Resources and Next Steps
 ======================================================
