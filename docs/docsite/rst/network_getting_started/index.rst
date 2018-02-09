@@ -31,5 +31,6 @@ This guide:
    network_differences
    first_playbook
    first_inventory
+   real_world
    intermediate_concepts
    resources
