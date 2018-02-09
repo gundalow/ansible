@@ -3,33 +3,33 @@ Network Getting Started: Working with Inventory
 
 A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
 
-First, group your devices by OS and/or by function. In this tiny example data center, all leaf and spine devices are running VyOS:
+First, group your devices by OS and/or by function. You can group groups using the syntax `metagroupname:children` and listing groups as members of the metagroup. In this tiny example data center, the group `network` includes all leafs and all spines; the group `datacenter` includes all network devices plus all webservers.
 
 .. code-block:: yaml
 
-[leafs]
-leaf01 
-leaf02
+   [leafs]
+   leaf01 
+   leaf02
 
-[spines]
-spine01
-spine02
+   [spines]
+   spine01
+   spine02
 
-[network:children]
-leafs
-spines
+   [network:children]
+   leafs
+   spines
 
-[servers]
-server01
-server02
+   [webservers]
+   webserver01
+   webserver02
 
-[datacenter:children]
-leafs
-spines
-servers
+   [datacenter:children]
+   leafs
+   spines
+   webservers
 
 
-Next, you can set many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. This includes each network device's IP, OS, and SSH user:
+Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. In an inventory file you **must** use the syntax `key=value` for variable values.
 
 .. code-block:: yaml
 
@@ -62,7 +62,7 @@ When devices in a group share the same variable values, such as OS or SSH user, 
 leaf01 ansible_host=10.16.10.11
 leaf02 ansible_host=10.16.10.12
 
-[leafs_vars]
+[leafs:vars]
 ansible_network_os=vyos
 ansible_user=my_vyos_user
 
@@ -70,7 +70,7 @@ ansible_user=my_vyos_user
 spine01 ansible_host=10.16.10.13
 spine02 ansible_host=10.16.10.14
 
-[spines_vars]
+[spines:vars]
 ansible_network_os=vyos
 ansible_user=my_vyos_user
 
