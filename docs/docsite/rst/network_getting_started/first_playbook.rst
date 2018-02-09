@@ -70,7 +70,7 @@ Create and Run Your First Network Ansible Playbook
 
 If you want to run this command every day, you can save it in a playbook and run it with ansible-playbook instead of ansible. The playbook can store a lot of the parameters you provided with flags at the command line, leaving less to type at the command line. You need two files for this - a playbook and an inventory file.
 
-1. Save this content in a file called first_playbook.yml:
+1. Download :download:`first_playbook.yml <sample_files/first_playbook.yml>`, which looks like this:
 
 .. code-block:: yaml
 
@@ -78,7 +78,7 @@ If you want to run this command every day, you can save it in a playbook and run
     connection: network_cli
     hosts: all
     tasks:
-      - name: Get config for VyOS devices 
+      - name: Get config for VyOS devices
         vyos_facts:
           gather_subset: all
       - name: Display the config
@@ -117,15 +117,15 @@ The playbook contains one play with two tasks, and should generate output like t
        "msg": "The hostname is vyos and the OS is VyOS"
    }
 
-3. Now that you can retrieve the device config, try updating it with Ansible. Update your playbook like this:
+3. Now that you can retrieve the device config, try updating it with Ansible. Download :download:`first_playbook_ext.yml <sample_files/first_playbook_ext.yml>` or copy, rename and extend your playbook as shown below:
 
 .. code-block:: yaml
 
-  - name: First Playbook
+  - name: Network Getting Started: First Playbook Extended
     connection: network_cli
     hosts: all
     tasks:
-      - name: Get config for VyOS devices 
+      - name: Get config for VyOS devices
         vyos_facts:
           gather_subset: all
       - name: Display the config
@@ -136,7 +136,7 @@ The playbook contains one play with two tasks, and should generate output like t
 	      backup: yes
 	      lines:
 	        - set system host-name vyos-changed
-      - name: Get changed config for VyOS devices 
+      - name: Get changed config for VyOS devices
         vyos_facts:
           gather_subset: all
       - name: Display the changed config
@@ -147,7 +147,7 @@ This playbook now has four tasks in a single play. Run it with the same command 
 
 .. code-block:: bash
 
-   $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos first_playbook.yml 
+   $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos first_playbook_ext.yml 
 
    PLAY [First Playbook]
    ************************************************************************************************************************************
@@ -187,4 +187,4 @@ This playbook now has four tasks in a single play. Run it with the same command 
    vyos.example.net           : ok=6    changed=1    unreachable=0    failed=0   
 
 
-This playbook is useful. However, it still requires several command-line flags. Also, running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to use an inventory file to organize your managed nodes into groups with information like the ansible_network_os and the SSH user. 
+This playbook is useful. However, running it still requires several command-line flags. Also, running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to use an inventory file to organize your managed nodes into groups with information like the ansible_network_os and the SSH user. 
