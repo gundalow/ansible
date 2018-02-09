@@ -1,9 +1,9 @@
 Network Getting Started: Working with Inventory
 ===============================================
 
-A single playbook can maintain multiple network devices with a fully-featured inventory file.
+A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
 
-Group your devices by OS and/or by function:
+First, group your devices by OS and/or by function. In this tiny example data center, all leaf and spine devices are running VyOS:
 
 .. code-block:: yaml
 
@@ -29,7 +29,7 @@ spines
 servers
 
 
-In addition to grouping your devices, you can add variables like IP, OS, user and more:
+Next, you can set many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. This includes each network device's IP, OS, and SSH user:
 
 .. code-block:: yaml
 
@@ -54,7 +54,7 @@ leafs
 spines
 servers
 
-You can reduce duplication by consolidating common variables into group variables:
+When devices in a group share the same variable values, such as OS or SSH user, you can reduce duplication and simplify maintenance by consolidating these into group variables:
 
 .. code-block:: yaml
 
