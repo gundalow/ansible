@@ -8,7 +8,7 @@ First, group your devices by OS and/or by function. You can group groups using t
 .. code-block:: yaml
 
    [leafs]
-   leaf01 
+   leaf01
    leaf02
 
    [spines]
