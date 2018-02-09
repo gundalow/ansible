@@ -86,3 +86,6 @@ server02 ansible_host=10.16.10.16
 leafs
 spines
 servers
+
+
+As your inventory file grows, you can ease maintenance by moving the `vars` sections into YAML files of their own, called `group_vars` - this is highly recommended. Name each group_vars file after the group it describes and save it in a directory called `group_vars`. In this case, you would create a file called `group_vars/leafs` and another called `group_vars/spines`.
