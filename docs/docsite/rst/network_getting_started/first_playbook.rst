@@ -72,20 +72,8 @@ If you want to run this command every day, you can save it in a playbook and run
 
 1. Download :download:`first_playbook.yml <sample_files/first_playbook.yml>`, which looks like this:
 
-.. code-block:: yaml
-
-  - name: First Playbook
-    connection: network_cli
-    hosts: all
-    tasks:
-
-      - name: Get config for VyOS devices
-        vyos_facts:
-          gather_subset: all
-
-      - name: Display the config
-        debug:
-          msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+.. literalinclude:: sample_files/first_playbook.yml
+   :language: yaml
 
 Here you set the group (hosts: all), the connection method (connection: network_cli) and the module (in each task) in the playbook so you can omit them on the command line. The playbook also adds a second task to show the config output. When a module runs in a playbook, the output is held in memory for use by future tasks instead of written to the console. The debug task here lets you see the results in your shell.
 
@@ -119,38 +107,12 @@ The playbook contains one play with two tasks, and should generate output like t
        "msg": "The hostname is vyos and the OS is VyOS"
    }
 
-3. Now that you can retrieve the device config, try updating it with Ansible. Download :download:`first_playbook_ext.yml <sample_files/first_playbook_ext.yml>` or copy, rename and extend your playbook as shown below:
+3. Now that you can retrieve the device config, try updating it with Ansible. Download :download:`first_playbook_ext.yml <sample_files/first_playbook_ext.yml>`, which is an extended version of the first playbook:
 
-.. code-block:: yaml
+.. literalinclude:: sample_files/first_playbook_ext.yml
+   :language: yaml
 
-  - name: Network Getting Started: First Playbook Extended
-    connection: network_cli
-    hosts: all
-    tasks:
-
-      - name: Get config for VyOS devices
-        vyos_facts:
-          gather_subset: all
-
-      - name: Display the config
-        debug:
-          msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
-
-      - name: Update the hostname
-	    vyos_config:
-	      backup: yes
-	      lines:
-	        - set system host-name vyos-changed
-
-      - name: Get changed config for VyOS devices
-        vyos_facts:
-          gather_subset: all
-
-      - name: Display the changed config
-        debug:
-          msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
-
-This playbook now has four tasks in a single play. Run it with the same command you used above. The output shows you the change Ansible made to the config:
+The extended first playbook has four tasks in a single play. Run it with the same command you used above. The output shows you the change Ansible made to the config:
 
 .. code-block:: bash
 
