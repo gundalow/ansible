@@ -30,5 +30,6 @@ This guide:
    basic_concepts
    network_differences
    first_playbook
+   first_inventory
    intermediate_concepts
    resources
