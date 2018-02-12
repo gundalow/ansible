@@ -6,7 +6,13 @@ Network automation leverages the basic Ansible concepts, but there are important
 Execution on the Control Node 
 ```````````````````````````````````````````````````````````````
 
-Unlike most Ansible modules, network modules do not run on the managed nodes. On the front end, network modules work with ad-hoc commands, playbooks, and roles. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. Execution on the control node shapes another difference in how network modules function. Network modules do not run every task in a playbook. They request current config first, compare current config to the state described by the task or playbook, and execute a task only if it changes the state of the managed node. 
+Unlike most Ansible modules, network modules do not run on the managed nodes. On the front end, network modules work with ad-hoc commands, playbooks, and roles. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. 
+
+Execution on the control node shapes two other differences in how network modules function:
+
+- Network modules do not run every task in a playbook. They request current config first, compare current config to the state described by the task or playbook, and execute a task only if it changes the state of the managed node.
+
+- Network modules that offer a backup option write the backup files onto the control node. With Linux/Unix modules, where a configuration file already exists on the managed node(s), the backup file gets written by default in the same directory as the new, changed file. Network modules do not update configuration files on the managed nodes, because network configuration is not written in files. Network modules write backup files on the control node, in the `backup` directory under the playbook root directory.
 
 Multiple Communication Protocols
 ```````````````````````````````````````````````````````````````
