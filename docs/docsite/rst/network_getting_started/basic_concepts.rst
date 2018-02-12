@@ -32,8 +32,3 @@ Playbooks
 ```````````````````````````````````````````````````````````````
 
 Ordered lists of tasks, saved so you can run those tasks in that order repeatedly. Playbooks can include variables as well as tasks. Playbooks are written in YAML and are easy to read, write, share and understand. To learn more about playbooks, see :doc:`../playbooks_intro`.
-
-Become
-```````````````````````````````````````````````````````````````
-
-Privilege escalation in Ansible (also known as enable mode, or sudo). To learn more about become, see :doc:`../become`.
