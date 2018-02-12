@@ -29,7 +29,7 @@ First, group your devices by OS and/or by function. You can group groups using t
    webservers
 
 
-Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. In an inventory file you **must** use the syntax `key=value` for variable values.
+Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. If your network devices are only accessible by IP, you must add the IP to the inventory file. If you access your network devices using hostnames, the IP isn't necessary. In an inventory file you **must** use the syntax `key=value` for variable values.
 
 .. code-block:: yaml
 
@@ -88,4 +88,4 @@ spines
 servers
 
 
-As your inventory file grows, you can ease maintenance by moving the `vars` sections into YAML files of their own, called `group_vars` - this is highly recommended. Name each group_vars file after the group it describes and save it in a directory called `group_vars`. In this case, you would create a file called `group_vars/leafs` and another called `group_vars/spines`.
+As your inventory file grows, you can ease maintenance by moving the `vars` sections into YAML files of their own, called `group_vars` - this is highly recommended. Name each group_vars file after the group it describes and save it in a directory called `group_vars`. In this case, you would create a file called `group_vars/leafs` and another called `group_vars/spines`. For more details on building inventory files, see :doc:`the introduction to inventory<../intro_inventory>`.
