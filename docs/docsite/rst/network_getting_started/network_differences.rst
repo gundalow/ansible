@@ -17,7 +17,7 @@ Execution on the control node shapes two other differences in how network module
 Multiple Communication Protocols
 ```````````````````````````````````````````````````````````````
 
-Because they execute on the control node instead of on the managed nodes, network modules can support multiple communication protocols. The communication protocol (SSH, HTTPS) selected for each network module depends on the platform and the purpose of the module. Some network modules support only one protocol; some offer a choice. The most common protocol is SSH. The :doc:`module_docs/list_of_network_modules` detail which modules support which protocols. The communication protocol is determined by the value of the `ansible_connection` variable:
+Because they execute on the control node instead of on the managed nodes, network modules can support multiple communication protocols. The communication protocol (SSH, HTTPS) selected for each network module depends on the platform and the purpose of the module. Some network modules support only one protocol; some offer a choice. The most common protocol is SSH. The :doc:`list of network modules<../module_docs/list_of_network_modules>` detail which modules support which protocols. The communication protocol is determined by the value of the `ansible_connection` variable:
 
 ansible_connection setting		communication protocol
 local							SSH

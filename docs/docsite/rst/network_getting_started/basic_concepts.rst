@@ -16,7 +16,7 @@ The network devices (and/or servers) you manage with Ansible. Managed nodes are 
 Inventory
 ```````````````````````````````````````````````````````````````
 
-A list of managed nodes. An inventory file is also sometimes called a "hostfile". Your inventory can specify information like IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling. To learn more about inventory, see :doc:`the introduction to inventory<../intro_inventory>`.
+A list of managed nodes. An inventory file is also sometimes called a "hostfile". Your inventory can specify information like IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling. To learn more about inventory, see :doc:`the Working with Inventory<../user_guide/intro_inventory>` pages.
 
 Modules
 ```````````````````````````````````````````````````````````````
