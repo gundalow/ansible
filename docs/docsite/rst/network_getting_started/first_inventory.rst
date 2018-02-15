@@ -151,14 +151,21 @@ Create a file and write your password for ansible-vault to it:
 
    echo "my-ansible-vault-pw" > ~/my-ansible-vault-pw-file
 
-
-Encrypt the ssh password for your VyOS network devices with the ansible-vault password you just created:
+Encrypt the ssh password for your VyOS network devices, pulling your ansible-vault password from the file you just created:
 
 .. code-block:: bash
 
    ansible-vault encrypt_string --vault-id my_user@~/my-ansible-vault-pw-file 'VyOS_SSH_password' --name 'ansible_ssh_pass'
 
-The ``--vault-id`` flag allows different vault passwords for different levels of access. Note that the user name ``my_user`` appears in the output of the ``ansible-vault`` command:
+If you prefer to type your vault password rather than store it in a file, you can request a prompt:
+
+.. code-block:: bash
+
+   ansible-vault encrypt_string --vault-id my_user@prompt 'VyOS_SSH_password' --name 'ansible_ssh_pass'
+
+and type in the vault password for ``my_user``. 
+
+The ``--vault-id`` flag allows different vault passwords for different users or different levels of access. Note that the user name ``my_user`` appears in the output of the ``ansible-vault`` command:
 
 .. code-block:: bash
 
@@ -171,7 +178,7 @@ The ``--vault-id`` flag allows different vault passwords for different levels of
           65656439626166666363323435613131643066353762333232326232323565376635
    Encryption successful
 
-Copy the output into your ``group_vars/vyos.yml`` file, which now looks like this:
+Copy this output into your ``group_vars/vyos.yml`` file, which now looks like this:
 
 .. code-block:: yaml
 
@@ -192,7 +199,7 @@ To run a playbook with this setup, drop the ``-k`` flag and add a flag for your 
 
    ansible-playbook -i inventory --vault-id my_user@~/my-ansible-vault-pw-file first_playbook.yml
 
-If you prefer to type your vault password rather than store it in a file, you can request a prompt:
+Or with a prompt instead of the vault password file:
 
 .. code-block:: bash
 
@@ -204,7 +211,7 @@ WARNING: Every time you change an ansible-vault password, you must update all fi
 For more details on building inventory files, see :doc:`the introduction to inventory<../user_guide/intro_inventory>`; for more details on ansible-vault, see :doc:'the full Ansible Vault documentation<../user_guide/vault>.
 
 
-Organizing Your Ansible Files
+Organizing and Your Inventory and Other Ansible Files
 ```````````````````````````````````````````````````````````````
 
 Ansible expects to find certain files in certain places. As you expand your inventory and create more playbooks, your working Ansible project directory looks like this:
@@ -223,3 +230,8 @@ Ansible expects to find certain files in certain places. As you expand your inve
    ├── second_playbook.yml
    └── third_playbook.yml
 
+
+Tracking Changes to Inventory and Playbooks with Git
+```````````````````````````````````````````````````````````````
+
+start here in the morning . . .
