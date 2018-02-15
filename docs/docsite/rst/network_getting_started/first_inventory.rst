@@ -220,6 +220,6 @@ Ansible expects to find certain files in certain places. As you expand your inve
    ├── group_vars
    │   ├── vyos.yml
    │   └── eos.yml
-   └── second_playbook.yml
+   ├── second_playbook.yml
    └── third_playbook.yml
 
