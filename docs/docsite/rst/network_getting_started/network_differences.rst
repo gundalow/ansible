@@ -27,6 +27,7 @@ Because network modules execute on the control node instead of on the managed no
    "netconf", "XML over SSH", "network_os setting"
    "local", "depends on provider", "provider setting"
 
+Beginning with Ansible 2.5, we recommend using ``network_cli`` or ``netconf`` for ``ansible_connection`` whenever possible. For details on using API over HTTPS connections, see the platform-specific pages.
 
 Modules Organized by Network Platform
 ```````````````````````````````````````````````````````````````
