@@ -1,9 +1,39 @@
-Network Getting Started: Intermediate Concepts
+Network Getting Started: Beyond the Basics
 ======================================================
 
-Ansible Configuration: Setting global defaults
+This page introduces some best practices for managing your Ansible files, along with intermediate concepts like roles, global configuration, privilege escalation, filters and conditional comparisons.
 
-Ansible Vault: Protecting Sensitive Data
+Organizing Playbooks, Inventory and Other Ansible Files
+```````````````````````````````````````````````````````````````
+
+Ansible expects to find certain files in certain places. As you expand your inventory and create and run more playbooks, your working Ansible project directory looks like this:
+
+.. code-block:: console
+
+   .
+   ├── backup
+   │   ├── vyos.example.net_config.2018-02-08@11:10:15
+   │   ├── vyos.example.net_config.2018-02-12@08:22:41
+   ├── first_playbook.yml
+   ├── inventory
+   ├── group_vars
+   │   ├── vyos.yml
+   │   └── eos.yml
+   ├── roles
+   │   ├── ????
+   │   └── ????
+   ├── second_playbook.yml
+   └── third_playbook.yml
+
+The ``backup`` directory and the files in it get created when you run modules like ``vyos_config`` with the ``backup: yes`` parameter.
+
+
+Tracking Changes to Inventory and Playbooks with Git
+```````````````````````````````````````````````````````````````
+
+start here in the morning . . .
+
+Ansible Configuration: Setting global defaults
 
 Privilege Escalation: `authorize` and `become`
 

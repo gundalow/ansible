@@ -238,29 +238,4 @@ Or with a prompt instead of the vault password file:
 
 For more details on building inventory files, see :doc:`the introduction to inventory<../user_guide/intro_inventory>`; for more details on ansible-vault, see :doc:`the full Ansible Vault documentation<../user_guide/vault>`.
 
-
-Organizing and Your Inventory and Other Ansible Files
-```````````````````````````````````````````````````````````````
-
-Ansible expects to find certain files in certain places. As you expand your inventory and create and run more playbooks, your working Ansible project directory looks like this:
-
-.. code-block:: console
-
-   .
-   ├── backup
-   │   ├── vyos.example.net_config.2018-02-08@11:10:15
-   │   ├── vyos.example.net_config.2018-02-12@08:22:41
-   ├── first_playbook.yml
-   ├── inventory
-   ├── group_vars
-   │   ├── vyos.yml
-   │   └── eos.yml
-   ├── second_playbook.yml
-   └── third_playbook.yml
-
-The ``backup`` directory and the files in it get created when you run modules like ``vyos_config`` with the ``backup: yes`` parameter.
-
-Tracking Changes to Inventory and Playbooks with Git
-```````````````````````````````````````````````````````````````
-
-start here in the morning . . .
+Now that you understand the basics of commands, playbooks, and inventory, it's time to explore some more complex Ansible Network examples. 
