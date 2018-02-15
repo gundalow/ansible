@@ -3,7 +3,16 @@ Network Getting Started: Working with Inventory
 
 A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
 
-First, group your devices by OS and/or by function. You can group groups using the syntax ``metagroupname:children`` and listing groups as members of the metagroup. In this tiny example data center, the group ``network`` includes all leafs and all spines; the group ``datacenter`` includes all network devices plus all webservers.
+Basic Inventory
+```````````````````````````````````````````````````````````````
+
+First, group your inventory logically. Best practice is to group servers and network devices by their What (application, stack or microservice), Where (datacenter or region), and When (development stage):
+- What: db, web, leaf, spine
+- Where: east, west, floor_19, building_A
+- When: dev, test, staging, prod
+Avoid spaces, hyphens, and preceding numbers (use ``floor_19``, not :strike:`19th_floor`) in your group names. Group names are case sensitive.
+
+This tiny example data center illustrates a basic group structure. You can group groups using the syntax ``metagroupname:children`` and listing groups as members of the metagroup. Here, the group ``network`` includes all leafs and all spines; the group ``datacenter`` includes all network devices plus all webservers.
 
 .. code-block:: yaml
 
@@ -24,12 +33,18 @@ First, group your devices by OS and/or by function. You can group groups using t
    webserver02
 
    [datacenter:children]
-   leafs
-   spines
+   network
    webservers
 
 
-Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. If your network devices are only accessible by IP, you must add the IP to the inventory file. If you access your network devices using hostnames, the IP isn't necessary. In an inventory file you **must** use the syntax ``key=value`` for variable values.
+Add Variables to Inventory
+```````````````````````````````````````````````````````````````
+
+Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. If your network devices are only accessible by IP, you must add the IP to the inventory file. If you access your network devices using hostnames, the IP is not necessary. 
+
+The syntax for variable values is different in inventory and in YAML files (``group_vars`` and playbook files). In an inventory file you **must** use the syntax ``key=value`` for variable values and include the prefix ``ansible_`` in the ``key``. For example: ``ansible_network_os=vyos``. 
+
+(In any file with the ``.yml`` extension, including ``group_vars`` files and playbooks, you **must** use the YAML syntax ``key: value``. In playbooks, you must also drop the prefix ``ansible`` from the ``key``. So in a ``group_vars`` file you would use ``ansible_network_os: vyos`` and in a playbook you would use ``network_os: vyos``.)
 
 .. code-block:: yaml
 
@@ -53,6 +68,9 @@ Next, you can set values for many of the variables you needed in your first Ansi
    leafs
    spines
    servers
+
+Group Variables within Inventory
+```````````````````````````````````````````````````````````````
 
 When devices in a group share the same variable values, such as OS or SSH user, you can reduce duplication and simplify maintenance by consolidating these into group variables:
 
@@ -87,6 +105,9 @@ When devices in a group share the same variable values, such as OS or SSH user, 
    spines
    servers
 
+Move Group Variables to ``group_vars`` Files
+```````````````````````````````````````````````````````````````
+
 As your inventory grows, you may want to group devices by platform and move shared variables out of the main inventory file into a set of group variable files. This reduces duplication further and sets the stage for managing devices on multiple platforms in a single inventory file. The directory tree for this setup looks like this:
 
 .. code-block:: console
@@ -97,7 +118,7 @@ As your inventory grows, you may want to group devices by platform and move shar
    ├── group_vars
        └── vyos.yml
 
-with inventory:
+The group name must match the file name in your ``group_vars`` directory. In this example, Ansible will load the file ``group_vars/vyos.yml`` when it finds the group ``[vyos]`` in the inventory:
 
 .. code-block:: yaml
 
@@ -138,12 +159,15 @@ With this setup, you can run first_playbook.yml with only two flags:
 
    ansible-playbook -i inventory -k first_playbook.yml
 
-The ``-k`` flag means Ansible will prompt you for SSH passwords. Alternatively, you can store SSH and other device passwords securely in your group_vars files with ``ansible-vault``.
+You can use the ``-k`` flag and provide the SSH password(s) at the prompt. Alternatively, you can store SSH and other secrets and passwords securely in your group_vars files with ``ansible-vault``. 
 
-Protecting Sensitive Data with ansible-vault 
+
+Protecting Sensitive Variables with ``ansible-vault`` 
 ```````````````````````````````````````````````````````````````
 
-The ``ansible-vault`` command provides encryption for files and/or strings like passwords. First you must create a password for ansible-vault itself. Then you can encrypt dozens of different passwords across your Ansible project. You can access all those secrets with a single password (the ansible-vault password) when you run your playbooks. Here's a simple example.
+The ``ansible-vault`` command provides encryption for files and/or individual variables like passwords. This tutorial uses SSH passwords for an example. You can use the commands below to encrypt other sensitive information, such as database passwords, privilege-escalation passwords and more.
+
+First you must create a password for ansible-vault itself. Then you can encrypt dozens of different passwords across your Ansible project. You can access all those secrets with a single password (the ansible-vault password) when you run your playbooks. Here's a simple example.
 
 Create a file and write your password for ansible-vault to it:
 
@@ -165,7 +189,7 @@ If you prefer to type your vault password rather than store it in a file, you ca
 
 and type in the vault password for ``my_user``. 
 
-The ``--vault-id`` flag allows different vault passwords for different users or different levels of access. Note that the user name ``my_user`` appears in the output of the ``ansible-vault`` command:
+The ``--vault-id`` flag allows different vault passwords for different users or different levels of access. The output includes the user name ``my_user`` from your ``ansible-vault`` command and uses the YAML syntax ``key: value``:
 
 .. code-block:: bash
 
@@ -206,7 +230,9 @@ Or with a prompt instead of the vault password file:
    ansible-playbook -i inventory --vault-id my_user@prompt first_playbook.yml
 
 
-WARNING: Every time you change an ansible-vault password, you must update all files and strings encrypted using that password. If you do not update the encryption, and you cannot access the password used to encrypt a particular file or string, you will not be able to access that file or string. 
+.. warning:
+   
+   WARNING: Every time you change an ansible-vault password, you must update all files and strings encrypted using that password. If you do not update the encryption, and you cannot access the password used to encrypt a particular file or string, you will not be able to access that file or string. 
 
 For more details on building inventory files, see :doc:`the introduction to inventory<../user_guide/intro_inventory>`; for more details on ansible-vault, see :doc:'the full Ansible Vault documentation<../user_guide/vault>.
 

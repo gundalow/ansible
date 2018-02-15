@@ -60,9 +60,11 @@ The flags in this command set seven values:
   - the inventory (-i, the device or devices to target - without the trailing comma -i points to an inventory file)
   - the connection method (-c, the method for connecting and executing ansible)
   - the user (-u, the username for the SSH connection)
-  - the SSH password method (-k, please prompt for the password)
+  - the SSH connection method (-k, please prompt for the password)
   - the module (-m, the ansible module to run)
   - an extra variable ( -e, in this case, setting the network OS value)
+
+NOTE: If you use ``ssh-agent`` with ssh keys, Ansible loads them automatically. You can omit ``-k`` flag.
 
 
 Create and Run Your First Network Ansible Playbook
