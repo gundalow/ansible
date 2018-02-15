@@ -6,7 +6,7 @@ These concepts are common to all uses of Ansible, including network automation. 
 Control Node
 ```````````````````````````````````````````````````````````````
 
-Any machine with Ansible installed. You can run commands and playbooks, invoking `/usr/bin/ansible` or `/usr/bin/ansible-playbook`, from any control node. You can use any computer that has Python installed on it as a control node - laptops, shared desktops, and servers can all run Ansible. However, you cannot use a Windows machine as a control node. You can have multiple control nodes.
+Any machine with Ansible installed. You can run commands and playbooks, invoking ``/usr/bin/ansible`` or ``/usr/bin/ansible-playbook``, from any control node. You can use any computer that has Python installed on it as a control node - laptops, shared desktops, and servers can all run Ansible. However, you cannot use a Windows machine as a control node. You can have multiple control nodes.
 
 Managed Nodes
 ```````````````````````````````````````````````````````````````

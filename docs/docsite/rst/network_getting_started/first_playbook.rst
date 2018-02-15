@@ -75,7 +75,7 @@ If you want to run this command every day, you can save it in a playbook and run
 .. literalinclude:: sample_files/first_playbook.yml
    :language: yaml
 
-The playbook sets three of the seven values from the command line above: the group (hosts: all), the connection method (connection: network_cli) and the module (in each task). With those values set in the playbook, you can omit them on the command line. The playbook also adds a second task to show the config output. When a module runs in a playbook, the output is held in memory for use by future tasks instead of written to the console. The debug task here lets you see the results in your shell.
+The playbook sets three of the seven values from the command line above: the group (``hosts: all``), the connection method (``connection: network_cli``) and the module (in each task). With those values set in the playbook, you can omit them on the command line. The playbook also adds a second task to show the config output. When a module runs in a playbook, the output is held in memory for use by future tasks instead of written to the console. The debug task here lets you see the results in your shell.
 
 2. Run the playbook with the command:
 
@@ -156,4 +156,4 @@ The extended first playbook has four tasks in a single play. Run it with the sam
    vyos.example.net           : ok=6    changed=1    unreachable=0    failed=0   
 
 
-This playbook is useful. However, running it still requires several command-line flags. Also, running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to use an inventory file to organize your managed nodes into groups with information like the ansible_network_os and the SSH user. 
+This playbook is useful. However, running it still requires several command-line flags. Also, running a playbook against a single device is not a huge efficiency gain over making the same change manually. The next step to harnessing the full power of Ansible is to use an inventory file to organize your managed nodes into groups with information like the ``ansible_network_os`` and the SSH user. 

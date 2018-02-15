@@ -17,7 +17,7 @@ Execution on the control node shapes two other differences in how network module
 Multiple Communication Protocols
 ```````````````````````````````````````````````````````````````
 
-Because they execute on the control node instead of on the managed nodes, network modules can support multiple communication protocols. The communication protocol (XML over SSH, CLI over SSH, API over HTTPS) selected for each network module depends on the platform and the purpose of the module. Some network modules support only one protocol; some offer a choice. The most common protocol is CLI over SSH. You set the communication protocol with the `ansible_connection` variable:
+Because they execute on the control node instead of on the managed nodes, network modules can support multiple communication protocols. The communication protocol (XML over SSH, CLI over SSH, API over HTTPS) selected for each network module depends on the platform and the purpose of the module. Some network modules support only one protocol; some offer a choice. The most common protocol is CLI over SSH. You set the communication protocol with the ``ansible_connection`` variable:
 
 .. csv-table::
    :header: "Value of ansible_connection", "Protocol", "Requires"
@@ -31,5 +31,5 @@ Because they execute on the control node instead of on the managed nodes, networ
 Modules Organized by Network Platform
 ```````````````````````````````````````````````````````````````
 
-A network platform is a set of network devices with a common operating system that can be managed by a collection of modules.  The modules for each network platform share a prefix, for example: eos_ (Arista), ios_, iosxr_, nxos_ (Cisco), junos_ (Junpier), vyos_ (VyOS). All modules within a network platform share certain requirements. Some network platforms have specific differences - see the platform-specific documentation for details.
+A network platform is a set of network devices with a common operating system that can be managed by a collection of modules.  The modules for each network platform share a prefix, for example: eos_ (Arista), ios_, iosxr_, nxos_ (Cisco), junos_ (Juniper), vyos_ (VyOS). All modules within a network platform share certain requirements. Some network platforms have specific differences - see the platform-specific documentation for details.
 

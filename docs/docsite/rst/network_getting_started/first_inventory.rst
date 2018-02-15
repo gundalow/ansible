@@ -3,7 +3,7 @@ Network Getting Started: Working with Inventory
 
 A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
 
-First, group your devices by OS and/or by function. You can group groups using the syntax `metagroupname:children` and listing groups as members of the metagroup. In this tiny example data center, the group `network` includes all leafs and all spines; the group `datacenter` includes all network devices plus all webservers.
+First, group your devices by OS and/or by function. You can group groups using the syntax ``metagroupname:children`` and listing groups as members of the metagroup. In this tiny example data center, the group ``network`` includes all leafs and all spines; the group ``datacenter`` includes all network devices plus all webservers.
 
 .. code-block:: yaml
 
@@ -29,7 +29,7 @@ First, group your devices by OS and/or by function. You can group groups using t
    webservers
 
 
-Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. If your network devices are only accessible by IP, you must add the IP to the inventory file. If you access your network devices using hostnames, the IP isn't necessary. In an inventory file you **must** use the syntax `key=value` for variable values.
+Next, you can set values for many of the variables you needed in your first Ansible command in the inventory, so you can skip them in the ansible-playbook command. In this example, the inventory includes each network device's IP, OS, and SSH user. If your network devices are only accessible by IP, you must add the IP to the inventory file. If you access your network devices using hostnames, the IP isn't necessary. In an inventory file you **must** use the syntax ``key=value`` for variable values.
 
 .. code-block:: yaml
 
@@ -95,7 +95,7 @@ As your inventory grows, you may want to group devices by platform and move shar
    ├── first_playbook.yml
    ├── inventory
    ├── group_vars
-       ├── vyos.yml
+       └── vyos.yml
 
 with inventory:
 
@@ -114,16 +114,14 @@ with inventory:
    vyos_spines
 
    [network:children]
-   vyos_leafs
-   vyos_spines
+   vyos
 
    [servers]
    server01 ansible_host=10.16.10.15
    server02 ansible_host=10.16.10.16
 
    [datacenter:children]
-   vyos_leafs
-   vyos_spines
+   vyos
    servers
 
 and group_vars/vyos.yml:
@@ -140,12 +138,12 @@ With this setup, you can run first_playbook.yml with only two flags:
 
    ansible-playbook -i inventory -k first_playbook.yml
 
-The `-k` flag means Ansible will prompt you for SSH passwords. Alternatively, you can store SSH and other device passwords securely in your group_vars files with `ansible-vault`.
+The ``-k`` flag means Ansible will prompt you for SSH passwords. Alternatively, you can store SSH and other device passwords securely in your group_vars files with ``ansible-vault``.
 
 Protecting Sensitive Data with ansible-vault 
 ```````````````````````````````````````````````````````````````
 
-The `ansible-vault` command provides encryption for files and/or strings like passwords. First you must create a password for ansible-vault itself. Then you can encrypt dozens of different passwords across your Ansible project. You can access all those secrets with a single password (the ansible-vault password) when you run your playbooks. Here's a simple example.
+The ``ansible-vault`` command provides encryption for files and/or strings like passwords. First you must create a password for ansible-vault itself. Then you can encrypt dozens of different passwords across your Ansible project. You can access all those secrets with a single password (the ansible-vault password) when you run your playbooks. Here's a simple example.
 
 Create a file and write your password for ansible-vault to it:
 
@@ -160,7 +158,7 @@ Encrypt the ssh password for your VyOS network devices with the ansible-vault pa
 
    ansible-vault encrypt_string --vault-id my_user@~/my-ansible-vault-pw-file 'VyOS_SSH_password' --name 'ansible_ssh_pass'
 
-The `--vault-id` flag allows different vault passwords for different levels of access. Note that the user name `my_user` appears in the output of the `ansible-vault` command:
+The ``--vault-id`` flag allows different vault passwords for different levels of access. Note that the user name ``my_user`` appears in the output of the ``ansible-vault`` command:
 
 .. code-block:: bash
 
@@ -173,7 +171,7 @@ The `--vault-id` flag allows different vault passwords for different levels of a
           65656439626166666363323435613131643066353762333232326232323565376635
    Encryption successful
 
-Copy the output into your group_vars/vyos.yml file, which now looks like this:
+Copy the output into your ``group_vars/vyos.yml`` file, which now looks like this:
 
 .. code-block:: yaml
 
@@ -188,7 +186,7 @@ Copy the output into your group_vars/vyos.yml file, which now looks like this:
           3837646266663835640a313164343535316666653031353763613037656362613535633538386539
           65656439626166666363323435613131643066353762333232326232323565376635
 
-To run a playbook with this setup, drop the `-k` flag and add a flag for your vault-id:
+To run a playbook with this setup, drop the ``-k`` flag and add a flag for your ``vault-id``:
 
 .. code-block:: bash
 
@@ -209,7 +207,7 @@ For more details on building inventory files, see :doc:`the introduction to inve
 Organizing Your Ansible Files
 ```````````````````````````````````````````````````````````````
 
-Ansible expects to find certain files in certain places. A working Ansible project directory looks like this:
+Ansible expects to find certain files in certain places. As you expand your inventory and create more playbooks, your working Ansible project directory looks like this:
 
 .. code-block:: console
 
@@ -225,4 +223,3 @@ Ansible expects to find certain files in certain places. A working Ansible proje
    └── second_playbook.yml
    └── third_playbook.yml
 
-Over time, you may create many playbooks. 
