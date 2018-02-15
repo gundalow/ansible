@@ -33,61 +33,61 @@ Next, you can set values for many of the variables you needed in your first Ansi
 
 .. code-block:: yaml
 
-[leafs]
-leaf01 ansible_host=10.16.10.11 ansible_network_os=vyos ansible_user=my_vyos_user
-leaf02 ansible_host=10.16.10.12 ansible_network_os=vyos ansible_user=my_vyos_user
+   [leafs]
+   leaf01 ansible_host=10.16.10.11 ansible_network_os=vyos ansible_user=my_vyos_user
+   leaf02 ansible_host=10.16.10.12 ansible_network_os=vyos ansible_user=my_vyos_user
 
-[spines]
-spine01 ansible_host=10.16.10.13 ansible_network_os=vyos ansible_user=my_vyos_user
-spine02 ansible_host=10.16.10.14 ansible_network_os=vyos ansible_user=my_vyos_user
+   [spines]
+   spine01 ansible_host=10.16.10.13 ansible_network_os=vyos ansible_user=my_vyos_user
+   spine02 ansible_host=10.16.10.14 ansible_network_os=vyos ansible_user=my_vyos_user
 
-[network:children]
-leafs
-spines
+   [network:children]
+   leafs
+   spines
 
-[servers]
-server01 ansible_host=10.16.10.15 ansible_user=my_server_user
-server02 ansible_host=10.16.10.16 ansible_user=my_server_user
+   [servers]
+   server01 ansible_host=10.16.10.15 ansible_user=my_server_user
+   server02 ansible_host=10.16.10.16 ansible_user=my_server_user
 
-[datacenter:children]
-leafs
-spines
-servers
+   [datacenter:children]
+   leafs
+   spines
+   servers
 
 When devices in a group share the same variable values, such as OS or SSH user, you can reduce duplication and simplify maintenance by consolidating these into group variables:
 
 .. code-block:: yaml
 
-[leafs]
-leaf01 ansible_host=10.16.10.11
-leaf02 ansible_host=10.16.10.12
+   [leafs]
+   leaf01 ansible_host=10.16.10.11
+   leaf02 ansible_host=10.16.10.12
 
-[leafs:vars]
-ansible_network_os=vyos
-ansible_user=my_vyos_user
+   [leafs:vars]
+   ansible_network_os=vyos
+   ansible_user=my_vyos_user
 
-[spines]
-spine01 ansible_host=10.16.10.13
-spine02 ansible_host=10.16.10.14
+   [spines]
+   spine01 ansible_host=10.16.10.13
+   spine02 ansible_host=10.16.10.14
 
-[spines:vars]
-ansible_network_os=vyos
-ansible_user=my_vyos_user
+   [spines:vars]
+   ansible_network_os=vyos
+   ansible_user=my_vyos_user
 
-[network:children]
-leafs
-spines
+   [network:children]
+   leafs
+   spines
 
-[servers]
-server01 ansible_host=10.16.10.15
-server02 ansible_host=10.16.10.16
+   [servers]
+   server01 ansible_host=10.16.10.15
+   server02 ansible_host=10.16.10.16
 
-[datacenter:children]
-leafs
-spines
-servers
+   [datacenter:children]
+   leafs
+   spines
+   servers
 
-As your inventory grows, you may want to reduce duplication further by grouping devices by platform and moving shared variables out of the main inventory file into a set of group variable files. This sets the stage for managing devices on multiple platforms in a single inventory file. The directory tree for this setup looks like this:
+As your inventory grows, you may want to group devices by platform and move shared variables out of the main inventory file into a set of group variable files. This reduces duplication further and sets the stage for managing devices on multiple platforms in a single inventory file. The directory tree for this setup looks like this:
 
 .. code-block:: console
 
@@ -101,38 +101,38 @@ with inventory:
 
 .. code-block:: yaml
 
-[vyos_leafs]
-leaf01 ansible_host=10.16.10.11
-leaf02 ansible_host=10.16.10.12
+   [vyos_leafs]
+   leaf01 ansible_host=10.16.10.11
+   leaf02 ansible_host=10.16.10.12
 
-[vyos_spines]
-spine01 ansible_host=10.16.10.13
-spine02 ansible_host=10.16.10.14
+   [vyos_spines]
+   spine01 ansible_host=10.16.10.13
+   spine02 ansible_host=10.16.10.14
 
-[vyos:children]
-vyos_leafs
-vyos_spines
+   [vyos:children]
+   vyos_leafs
+   vyos_spines
 
-[network:children]
-vyos_leafs
-vyos_spines
+   [network:children]
+   vyos_leafs
+   vyos_spines
 
-[servers]
-server01 ansible_host=10.16.10.15
-server02 ansible_host=10.16.10.16
+   [servers]
+   server01 ansible_host=10.16.10.15
+   server02 ansible_host=10.16.10.16
 
-[datacenter:children]
-vyos_leafs
-vyos_spines
-servers
+   [datacenter:children]
+   vyos_leafs
+   vyos_spines
+   servers
 
 and group_vars/vyos.yml:
 
 .. code-block:: yaml
 
-ansible_connection: network_cli
-ansible_network_os: vyos
-ansible_user: my_vyos_user
+   ansible_connection: network_cli
+   ansible_network_os: vyos
+   ansible_user: my_vyos_user
 
 With this setup, you can run first_playbook.yml with only two flags:
 
