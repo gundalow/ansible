@@ -1,7 +1,7 @@
 Network Getting Started: Beyond the Basics
 ======================================================
 
-This page introduces some concepts that help you manage your Ansible workflow, including roles, directory structure, and source control. Like the Basic Concepts at the beginning of this guide, these intermediate concepts are common to all uses of Ansible.
+This page introduces some concepts that help you manage your Ansible workflow: roles, directory structure, and source control. Like the Basic Concepts at the beginning of this guide, these intermediate concepts are common to all uses of Ansible. This page also offers resources for learning more.
 
 Beyond Playbooks: Moving Tasks and Variables into Roles
 ```````````````````````````````````````````````````````````````
@@ -38,4 +38,29 @@ Tracking Changes to Inventory and Playbooks: Source Control with Git
 
 As you expand your inventory, roles and playbooks, you should place your Ansible projects under source control. We recommend ``git`` for source control. ``git`` provides an audit trail, letting you you track changes, roll back mistakes, view history and share the workload of managing, maintaining and expanding your Ansible ecosystem. There are plenty of tutorials and guides to using ``git`` available.
 
+Resources and Next Steps
+```````````````````````````````````````````````````````````````
+
+Text:
+Network Automation on the `Link Ansible website <http://ansible.com/overview/networking>`
+Ansible Network `Link Blog posts <http://ansible.com/blog/topic/networks>`
+
+Video:
+All the `Link AnsibleFests <https://www.ansible.com/resources/videos> and `Link AnsibleAutomates <https://www.ansible.com/resources/webinars-training>` are recorded and include many Network related topics.
+You can filter to only show Network topics using the Filter by Category option on the right hand side
+For the schedule the events please see the Ansible Events page. 
+
+GitHub Repos:
+The Network-Automation GitHub project is a open community for all things network automation. Here there will be various examples, demonstrations and GitHub repos dedicated exclusively for automation networking platforms. 
+Lightbulb
+Example playbooks
+Which other repos?
+Join our collaborative GitHub project on github.com/network-automation! Anyone with a GitHub account is able to create Pull Requests (PRs) or issues. If you'd like to be more involved email ansible-network at redhat.com.
+
+Email:
+Ansible Network Community
+To join simply email ansible-network at redhat.com and we will get you added right away!
+
+IRC:
+Join us in #ansible-network on Freenode IRC
 
