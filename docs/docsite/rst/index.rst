@@ -64,6 +64,8 @@ Ansible, Inc. releases a new major release of Ansible approximately every two mo
    :caption: Ansible Network
 
    network/index
+   network/getting_started/index
+   network/user_guide/index
 
 .. toctree::
    :maxdepth: 2
