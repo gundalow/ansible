@@ -113,6 +113,7 @@ The syntax for variable values is different in inventory, in playbooks and in ``
 
 - In an inventory file you **must** use the syntax ``key=value`` for variable values: ``ansible_network_os=vyos``. 
 - In any file with the ``.yml`` or ``.yaml`` extension, including playbooks and ``group_vars`` files, you **must** use YAML syntax: ``key: value``
+
   - In ``group_vars`` files, use the full ``key`` name: ``ansible_network_os: vyos``. 
   - In playbooks, use the short-form ``key`` name, which drops the ``ansible`` prefix: ``network_os: vyos``
 
