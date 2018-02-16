@@ -26,5 +26,4 @@ This guide introduces basic Ansible concepts and guides you through your first A
    How Network Automation is Different <network_differences>
    First Ansible Network Command and Playbook <first_playbook>
    Working with Network Inventory <first_inventory>
-   Intermediate Ansible Concepts <intermediate_concepts>
-   Further Learning and Resources <resources>
+   Beyond the Basics <intermediate_concepts>

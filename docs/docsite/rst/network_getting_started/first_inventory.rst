@@ -4,8 +4,10 @@ Network Getting Started: Working with Inventory
 
 A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
 
+.. contents:: Topics
+
 Basic Inventory
-================================================================================
+==================================================
 
 First, group your inventory logically. Best practice is to group servers and network devices by their What (application, stack or microservice), Where (datacenter or region), and When (development stage):
 

@@ -4,6 +4,8 @@ Network Getting Started: How Network Automation is Different
 
 Network automation leverages the basic Ansible concepts, but there are important differences in how the network modules work. This introduction prepares you to understand the exercises in this guide.
 
+.. contents:: Topics
+
 Execution on the Control Node
 ================================================================================
 
