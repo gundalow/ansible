@@ -1,5 +1,5 @@
 ***********************************************
-Network Getting Started: Working with Inventory
+Build Your Inventory
 ***********************************************
 
 A fully-featured inventory file can serve as the source of truth for your network. Using an inventory file, a single playbook can maintain hundreds of network devices with a single command. This page shows you how to build an inventory file, step by step.
