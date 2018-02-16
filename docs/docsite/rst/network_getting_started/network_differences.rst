@@ -35,12 +35,10 @@ Modules Organized by Network Platform
 
 A network platform is a set of network devices with a common operating system that can be managed by a collection of modules.  The modules for each network platform share a prefix, for example: 
 
-- eos_ (Arista)
-- ios_
-- iosxr_
-- nxos_ (Cisco)
-- junos_ (Juniper)
-- vyos_ (VyOS)
+- Arista: ``eos_``
+- Cisco: ``ios_``, ``iosxr_``, ``nxos_``
+- Juniper: ``junos_``
+- VyOS ``vyos_``
 
 All modules within a network platform share certain requirements. Some network platforms have specific differences - see the platform-specific documentation for details.
 
