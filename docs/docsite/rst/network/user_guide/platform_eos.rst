@@ -54,7 +54,35 @@ Example CLI Task
 Using eAPI in Ansible 2.5
 ================================================================================
 
-Example eAPI ``group_vars/eos.yml``
+Enabling eAPI
+
+Before you can use eAPI to connect to a switch, you must enable eAPI. To enable eAPI on a new switch via Ansible, use the ``eos_eapi`` module via the CLI connection. Set up group_vars/eos.yml:
+
+.. code-block:: yaml
+
+   ansible_connection: network_cli
+   ansible_network_os: eos
+   ansible_user: my_eos_user
+   ansible_ssh_pass: my_ssh_password
+   eapi:
+     host: "{{ inventory_hostname }}"
+     transport: eapi
+
+and run a playbook task like this:
+
+.. code-block:: yaml
+
+   - name: Enable eAPI
+      eos_eapi:
+          enable_http: yes
+          enable_https: yes
+      become: true
+      become_method: enable
+      when: ansible_network_os == 'eos'
+
+To find out more about the options for enabling HTTP/HTTPS and local http see the :ref:`eos_eapi <eos_eapi>` module documentation.
+
+Once eAPI is enabled, change your ``group_vars/eos.yml`` to use the eAPI connection:
 
 .. code-block:: yaml
 
