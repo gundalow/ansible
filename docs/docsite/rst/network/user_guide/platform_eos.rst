@@ -26,6 +26,7 @@ Using CLI in Ansible 2.5
 ================================================================================
 
 Example CLI ``group_vars/eos.yml``
+----------------------------------
 
 .. code-block:: yaml
 
@@ -40,6 +41,7 @@ Example CLI ``group_vars/eos.yml``
 If you are using SSH keys (including an ssh-agent) you can remove the ansible_ssh_pass line.
 
 Example CLI Task
+----------------
 
 .. code-block:: yaml
 
@@ -55,20 +57,9 @@ Using eAPI in Ansible 2.5
 ================================================================================
 
 Enabling eAPI
+-------------
 
-Before you can use eAPI to connect to a switch, you must enable eAPI. To enable eAPI on a new switch via Ansible, use the ``eos_eapi`` module via the CLI connection. Set up group_vars/eos.yml:
-
-.. code-block:: yaml
-
-   ansible_connection: network_cli
-   ansible_network_os: eos
-   ansible_user: my_eos_user
-   ansible_ssh_pass: my_ssh_password
-   eapi:
-     host: "{{ inventory_hostname }}"
-     transport: eapi
-
-and run a playbook task like this:
+Before you can use eAPI to connect to a switch, you must enable eAPI. To enable eAPI on a new switch via Ansible, use the ``eos_eapi`` module via the CLI connection. Set up group_vars/eos.yml just like in the CLI example above, then run a playbook task like this:
 
 .. code-block:: yaml
 
@@ -82,7 +73,10 @@ and run a playbook task like this:
 
 To find out more about the options for enabling HTTP/HTTPS and local http see the :ref:`eos_eapi <eos_eapi>` module documentation.
 
-Once eAPI is enabled, change your ``group_vars/eos.yml`` to use the eAPI connection:
+Once eAPI is enabled, change your ``group_vars/eos.yml`` to use the eAPI connection.
+
+Example eAPI ``group_vars/eos.yml``
+-----------------------------------
 
 .. code-block:: yaml
 
@@ -97,6 +91,7 @@ Once eAPI is enabled, change your ``group_vars/eos.yml`` to use the eAPI connect
 **QUESTION:** How do I set a web proxy for indirect access via an eAPI connection?
 
 Example eAPI Task
+-----------------
 
 .. code-block:: yaml
 
