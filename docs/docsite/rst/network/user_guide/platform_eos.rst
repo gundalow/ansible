@@ -17,7 +17,7 @@ Connections Available
 
    "**Protocol:**", "SSH", "HTTP(S)"
    "**Credentials:**", "uses SSH keys / SSH-agent if present", "uses HTTPS certificates if present"
-   "**Indirect Access:**", "via a bastion (jump) host", "via a web proxy"
+   "**Indirect Access:**", "via a bastion (jump host)", "via a web proxy"
    "**Connection Settings:**", "``ansible_network_connection: network_cli``", "``ansible_network_connection: local`` with ``transport: eapi`` in the ``provider`` dictionary"
    "**Enable Mode (Privilege Escalation):**", "supported - use ``become``", "supported - use ``authorize: yes`` in the ``provider`` dictionary"
    "**Returned Data Format:**", "``stdout[0].``", "``stdout[0].messages[0].``"
@@ -25,7 +25,7 @@ Connections Available
 Using CLI in Ansible 2.5
 ================================================================================
 
-Example ``group_vars/eos.yml``
+Example CLI ``group_vars/eos.yml``
 
 .. code-block:: yaml
 
@@ -35,24 +35,26 @@ Example ``group_vars/eos.yml``
    ansible_ssh_pass: !vault...
    ansible_become: yes
    ansible_become_method: enable
+   ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q bastion01"'
 
-Example Task
+If you are using SSH keys (including an ssh-agent) you can remove the ansible_ssh_pass line.
+
+Example CLI Task
 
 .. code-block:: yaml
 
    - name: Backup switch (eos)
      eos_config:
        backup: yes
-       register: backup_eos_location
+     register: backup_eos_location
      when: ansible_network_os == 'eos'
 
-If you are using SSH keys (including an ssh-agent) you can remove the ansible_ssh_pass line.
 
 
 Using eAPI in Ansible 2.5
 ================================================================================
 
-Example ``group_vars/eos.yml``
+Example eAPI ``group_vars/eos.yml``
 
 .. code-block:: yaml
 
@@ -64,7 +66,9 @@ Example ``group_vars/eos.yml``
      host: "{{ inventory_hostname }}"
      transport: eapi
 
-Example Task
+**QUESTION:** How do I set a web proxy for indirect access via an eAPI connection?
+
+Example eAPI Task
 
 .. code-block:: yaml
 
