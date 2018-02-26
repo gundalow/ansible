@@ -16,7 +16,7 @@ Connections Available
    :widths: 10, 10, 10
 
    "**Protocol:**", "SSH", "HTTP(S)"
-   "**Credentials:**", "uses SSH keys / SSH-agent if present", "uses HTTPS certificates if present"
+   "**Credentials:**", "usess SSH keys / SSH-agent if present; accepts ``-u myuser -k``", "uses HTTPS certificates if present"
    "**Indirect Access:**", "via a bastion (jump host)", "via a web proxy"
    "**Connection Settings:**", "``ansible_network_connection: network_cli``", "``ansible_network_connection: local`` with ``transport: eapi`` in the ``provider`` dictionary"
    "**Enable Mode (Privilege Escalation):**", "supported - use ``become``", "supported - use ``authorize: yes`` in the ``provider`` dictionary"
@@ -36,9 +36,11 @@ Example CLI ``group_vars/eos.yml``
    ansible_ssh_pass: !vault...
    ansible_become: yes
    ansible_become_method: enable
-   ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q bastion01"'
+   ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q bastion01"'
 
-If you are using SSH keys (including an ssh-agent) you can remove the ansible_ssh_pass line.
+If you are using SSH keys (including an ssh-agent) you can remove the ``ansible_ssh_pass`` configuration.
+
+If you are accessing your host directly (not through a bastion/jump host) you can remove the ``ansible_ssh_common_args`` configuration.
 
 Example CLI Task
 ----------------
@@ -87,8 +89,13 @@ Example eAPI ``group_vars/eos.yml``
    eapi:
      host: "{{ inventory_hostname }}"
      transport: eapi
+   proxy_env:
+     http_proxy: http://proxy.example.com:8080
 
-**QUESTION:** How do I set a web proxy for indirect access via an eAPI connection?
+If you are accessing your host directly (not through a web proxy) you can remove the ``proxy_env`` configuration.
+
+If you are accessing your host through a web proxy using ``https``, change ``http_proxy`` to ``https_proxy``.
+
 
 Example eAPI Task
 -----------------
@@ -100,15 +107,14 @@ Example eAPI Task
        backup: yes
        provider: "{{ eapi }}"
      register: backup_eos_location
+     environment: "{{ proxy_env }}"
      when: ansible_network_os == 'eos'
 
-In this example the ``eapi`` variable defined in ``group_vars`` is passed to the ``provider`` option of the module.
+In this example two variables defined in ``group_vars`` get passed to the module of the task: 
+
+- the ``eapi`` variable gets passed to the ``provider`` option of the module
+- the ``proxy_env`` variable gets passed to the ``environment`` option of the module
+
 
 .. warning:: 
    Never store passwords in plain text. We recommend using :ref:`Ansible Vault <playbooks_vault>` to encrypt all sensitive variables.
-
-
-Notes for Ansible < 2.5
-================================================================================
-
-Do we need any content here?
