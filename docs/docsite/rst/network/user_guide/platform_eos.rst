@@ -11,16 +11,26 @@ Arista EOS supports multiple connections. This page offers details on how each c
 Connections Available
 ================================================================================
 
-.. csv-table::
-   :header: "", "CLI", "eAPI"
-   :widths: 10, 10, 10
++---------------------------+-----------------------------------------------+---------------------------------------+
+|..                         | CLI                                           | eAPI                                  |
++===========================+===============================================+=======================================+
+| **Protocol**              |  SSH                                          | HTTP(S)                               |
++---------------------------+-----------------------------------------------+---------------------------------------+
+| **Credentials**           | - uses SSH keys / SSH-agent if present        | uses HTTPS certificates if present    |
+|                           | - accepts ``-u myuser -k``                    |                                       |
++---------------------------+-----------------------------------------------+---------------------------------------+
+| **Indirect Access**       | via a bastion (jump host)                     | via a web proxy                       |
++---------------------------+-----------------------------------------------+---------------------------------------+
+| **Connection Settings**   | ``ansible_network_connection: network_cli``   | ``ansible_network_connection: local`` |
+|                           |                                               | - requires ``transport: eapi``        |
+|                           |                                               | - in the ``provider`` dictionary      |
++---------------------------+-----------------------------------------------+---------------------------------------+
+| **Enable Mode**           | supported - use ``become``                    | supported - use ``authorize: yes``    |
+| (Privilege Escalation)    |                                               | in the ``provider`` dictionary        |
++---------------------------+-----------------------------------------------+---------------------------------------+
+| **Returned Data Format**  | ``stdout[0].``                                | ``stdout[0].messages[0].``            |
++---------------------------+-----------------------------------------------+---------------------------------------+
 
-   "**Protocol:**", "SSH", "HTTP(S)"
-   "**Credentials:**", "usess SSH keys / SSH-agent if present; accepts ``-u myuser -k``", "uses HTTPS certificates if present"
-   "**Indirect Access:**", "via a bastion (jump host)", "via a web proxy"
-   "**Connection Settings:**", "``ansible_network_connection: network_cli``", "``ansible_network_connection: local`` with ``transport: eapi`` in the ``provider`` dictionary"
-   "**Enable Mode (Privilege Escalation):**", "supported - use ``become``", "supported - use ``authorize: yes`` in the ``provider`` dictionary"
-   "**Returned Data Format:**", "``stdout[0].``", "``stdout[0].messages[0].``"
 
 Using CLI in Ansible 2.5
 ================================================================================
