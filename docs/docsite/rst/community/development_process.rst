@@ -7,6 +7,40 @@ The Ansible Development Process
 
 This section discusses how the Ansible development and triage process works.
 
+PR Workflow
+===========
+
+.. graphviz::
+
+   digraph Flatland {
+
+      "pr created" -> "CI" -> "CI Status Added" -> "Bot: Notify maintainiers & Add labels" -> "Triaged by Core";
+      "pr created" -> "Closed by Bot: invalid";
+      "Triaged by Core" -> "REVIEW STUFF";
+
+      "Triaged by Core" -> "Closed by Core: invalid";
+      subgraph cluster_review {
+        label="Review Process";
+        "Triaged by Core" -> "Review Process";
+        "Review Process" -> "Feedback received";
+        "Feedback received" -> "Address feedback";
+        "Address feedback" -> "CI Runs";
+        "CI Runs" -> "Fix CI";
+        "Fix CI" -> "Review Process";
+      }
+
+      "Review Process" -> "Merged"
+
+      // Closure cases
+      // Use `rank` to align horizontally
+      {rank=same; "pr created",  "Closed by Bot: invalid"}
+      "Closed by Core: invalid" [shape=polygon,sides=4,color=red];
+      "Closed by Bot: invalid" [shape=polygon,sides=4,color=red];
+      {rank=same; "Triaged by Core", "Closed by Core: invalid"};
+      }
+
+
+
 Road Maps
 =========
 
