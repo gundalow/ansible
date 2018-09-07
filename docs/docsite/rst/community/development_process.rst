@@ -16,7 +16,6 @@ PR Workflow
 
       "pr created" -> "CI" -> "CI Status Added" -> "Bot: Notify maintainiers & Add labels" -> "Triaged by Core";
       "pr created" -> "Closed by Bot: invalid";
-      "Triaged by Core" -> "REVIEW STUFF";
 
       "Triaged by Core" -> "Closed by Core: invalid";
       subgraph cluster_review {
@@ -29,7 +28,8 @@ PR Workflow
         "Fix CI" -> "Review Process";
       }
 
-      "Review Process" -> "Merged"
+
+      "Review Process" -> "Merged";
 
       // Closure cases
       // Use `rank` to align horizontally
