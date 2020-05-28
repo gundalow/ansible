@@ -66,7 +66,6 @@ def main():
     )
 
     plugin_routing_schema = Any(
-        Schema(*string_types),
         Schema({
             ('deprecation'): Any(deprecation_schema),
             ('redirect'): Any(*string_types),
@@ -99,7 +98,6 @@ def main():
     # import_redirection schema
 
     import_redirection_schema = Any(
-        Schema(*string_types),
         Schema({
             ('redirect'): Any(*string_types),
             # import_redirect doesn't currently support deprecation
@@ -112,7 +110,6 @@ def main():
     # action_groups_redirection schema
 
     action_group_redirection_schema = Any(
-        Schema(*string_types),
         Schema({
             Required('redirect'): Any(*string_types),
         }, extra=PREVENT_EXTRA)
