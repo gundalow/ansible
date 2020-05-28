@@ -8,7 +8,7 @@ import re
 import sys
 import yaml
 
-from voluptuous import Any, Invalid, Length, Match, MultipleInvalid, PREVENT_EXTRA
+from voluptuous import Any, MultipleInvalid, PREVENT_EXTRA
 from voluptuous import Required, Schema
 from voluptuous.humanize import humanize_error
 
@@ -50,6 +50,9 @@ def main():
         print('%s:%d:%d: YAML load failed: %s' %
               (path, 0, 0, re.sub(r'\s+', ' ', str(ex))))
         sys.exit()
+
+    # Updates to schema MUST also be reflected in the documentation
+    # ~https://docs.ansible.com/ansible/devel/dev_guide/developing_collections.html
 
     # plugin_routing schema
 
@@ -93,9 +96,6 @@ def main():
         ('test'): Any(None, *list_dict_plugin_routing_schema),
     }, extra=PREVENT_EXTRA)
 
-#    list_dict_import_schema = [{str_type: plugin_routing_schema}
-#                               for str_type in string_types]
-
     # import_redirection schema
 
     import_redirection_schema = Any(
@@ -109,15 +109,28 @@ def main():
     list_dict_import_redirection_schema = [{str_type: import_redirection_schema}
                                            for str_type in string_types]
 
+    # action_groups_redirection schema
+
+    action_group_redirection_schema = Any(
+        Schema(*string_types),
+        Schema({
+            Required('redirect'): Any(*string_types),
+        }, extra=PREVENT_EXTRA)
+    )
+
+    list_dict_action_group_redirection_schema = [{str_type: action_group_redirection_schema}
+                                                 for str_type in string_types]
+
     # top level schema
 
     schema = Schema({
-        # ansible-base and collections MUST have plugin_routing
-        Required('plugin_routing'): Any(plugin_schema),
-        # import_redirection is optional
+        # All of these are optional
+        ('plugin_routing'): Any(plugin_schema),
         ('import_redirection'): Any(None, *list_dict_import_redirection_schema),
-        # Optional for collections. In the future we should validate this with SpecifierSet
-        ('requires_ansible'): Any(*string_types)
+        # requires_ansible: In the future we should validate this with SpecifierSet
+        ('requires_ansible'): Any(*string_types),
+        ('action_groups'): dict,
+        ('action_groups_redirection'): Any(None, *list_dict_action_group_redirection_schema),
     }, extra=PREVENT_EXTRA)
 
     # Ensure schema is valid
