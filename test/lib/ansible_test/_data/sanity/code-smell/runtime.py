@@ -116,6 +116,8 @@ def main():
         Required('plugin_routing'): Any(plugin_schema),
         # import_redirection is optional
         ('import_redirection'): Any(None, *list_dict_import_redirection_schema),
+        # Optional for collections. In the future we should validate this with SpecifierSet
+        ('requires_ansible'): Any(*string_types)
     }, extra=PREVENT_EXTRA)
 
     # Ensure schema is valid
