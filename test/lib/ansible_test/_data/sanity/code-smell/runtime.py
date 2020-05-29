@@ -144,22 +144,6 @@ def main():
             # No way to get line/column numbers
             print('%s:%d:%d: %s' % (path, 0, 0, humanize_error(routing, error)))
 
-    # This maybe moved to https://github.com/ansible-community/ansibulled
-#    for plugin_type in sorted(list(plugin_schema.schema.keys())):
-#        for plugin, file_meta in routing['plugin_routing'][plugin_type].items():
-#            namespace, collection, new_name  = routing['plugin_routing'][plugin_type][plugin]['redirect'].split('.')
-#            expected_path = "/tmp/ansible_collections/%s/%s/plugins/%s" % ( namespace, collection, plugin_type)
-#            found_plugin = False
-#            if os.path.exists('%s/%s.py' % (expected_path, new_name)):
-#                found_plugin = True
-#            elif namespace == 'community' and collection in ['general', 'network']:
-#                if plugin_type in ['modules','module_utils']:
-#                    if glob.glob('%s/**/%s.py' % (expected_path, new_name), recursive = True):
-#                        found_plugin = True
-#            if not found_plugin:
-#                print("%s:%d:%d: Can't find '%s/%s.py' in %s.%s" %
-#                    (path, 0, 0, plugin_type, new_name, namespace, collection))
-
 
 if __name__ == '__main__':
     main()
