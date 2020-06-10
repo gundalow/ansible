@@ -59,13 +59,13 @@ def main():
     deprecation_schema = Any(Schema(
         {
             Required('removal_date'): Any(*string_types),
-            Required('warning_text'): Any(*string_types),
+            'warning_text': Any(*string_types),
         },
         extra=PREVENT_EXTRA
     ), Schema(
         {
             Required('removal_version'): Any(*string_types),
-            Required('warning_text'): Any(*string_types),
+            'warning_text': Any(*string_types),
         },
         extra=PREVENT_EXTRA
     ))
