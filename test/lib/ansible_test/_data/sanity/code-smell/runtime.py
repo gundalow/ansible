@@ -96,8 +96,10 @@ def main():
         ('modules'): Any(None, *list_dict_plugin_routing_schema),
         ('netconf'): Any(None, *list_dict_plugin_routing_schema),
         ('shell'): Any(None, *list_dict_plugin_routing_schema),
+        ('strategy'): Any(None, *list_dict_plugin_routing_schema),
         ('terminal'): Any(None, *list_dict_plugin_routing_schema),
         ('test'): Any(None, *list_dict_plugin_routing_schema),
+        ('vars'): Any(None, *list_dict_plugin_routing_schema),
     }, extra=PREVENT_EXTRA)
 
     # import_redirection schema
