@@ -114,17 +114,6 @@ def main():
     list_dict_import_redirection_schema = [{str_type: import_redirection_schema}
                                            for str_type in string_types]
 
-    # action_groups_redirection schema
-
-    action_group_redirection_schema = Any(
-        Schema({
-            Required('redirect'): Any(*string_types),
-        }, extra=PREVENT_EXTRA)
-    )
-
-    list_dict_action_group_redirection_schema = [{str_type: action_group_redirection_schema}
-                                                 for str_type in string_types]
-
     # top level schema
 
     schema = Schema({
@@ -134,7 +123,6 @@ def main():
         # requires_ansible: In the future we should validate this with SpecifierSet
         ('requires_ansible'): Any(*string_types),
         ('action_groups'): dict,
-        ('action_groups_redirection'): Any(None, *list_dict_action_group_redirection_schema),
     }, extra=PREVENT_EXTRA)
 
     # Ensure schema is valid
