@@ -605,7 +605,7 @@ class Display:
         if m:
             self.print_message('::error file=%s,line=%s,col=%s::%s' % (m.group(1), m.group(2), m.group(3), m.group(4)), color=self.red, fd=sys.stderr)
         else:
-            self.print_message('::error %s' % message, color=self.red, fd=sys.stderr)
+            self.print_message('::error %s' % message)
     def info(self, message, verbosity=0, truncate=False):
         """
         :type message: str
