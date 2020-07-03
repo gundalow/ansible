@@ -599,8 +599,13 @@ class Display:
         """
         :type message: str
         """
-        self.print_message('ERROR: %s' % message, color=self.red, fd=sys.stderr)
-
+        #ERROR: tests/sanity/ignore-2.10.txt:46:1: File 'roles/zabbix_proxy/molecule/default/tests/test_default.py' does not exist
+        #:error file=badcode.py,line=3,col=0::Constant name
+        m = re.search("(.*):(\d+):(\d+):(.*)", message)
+        if m:
+            self.print_message('::error file=%s,line=%s,col=%s::%s' % (m.group(1), m.group(2), m.group(3), m.group(4)), color=self.red, fd=sys.stderr)
+        else:
+            self.print_message('::error %s' % message, color=self.red, fd=sys.stderr)
     def info(self, message, verbosity=0, truncate=False):
         """
         :type message: str
