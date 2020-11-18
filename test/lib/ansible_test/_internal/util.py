@@ -599,14 +599,28 @@ class Display:
         """
         :type message: str
         """
-        #ERROR: tests/sanity/ignore-2.10.txt:46:1: File 'roles/zabbix_proxy/molecule/default/tests/test_default.py' does not exist
-        #:error file=badcode.py,line=3,col=0::Constant name
 
-        m = re.search("(.*):(\d+):(\d+): (.*)", message)
-        if m:
-            self.print_message('::error file=%s,line=%s,col=%s::%s' % (m.group(1), m.group(2), m.group(3), m.group(4)), color=self.red, fd=sys.stderr)
+        # If run under GitHub Actions we also want to emit output recognized by GHA.
+        if os.getenv('GITHUB_ACTIONS') == 'true' and os.getenv('GITHUB_WORKFLOW'):
+            # We are running under a GitHub action
+            # # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-a-warning-message
+            #ERROR: tests/sanity/ignore-2.10.txt:46:1: File 'roles/zabbix_proxy/molecule/default/tests/test_default.py' does not exist
+            #:error file=badcode.py,line=3,col=0::Constant name
+
+            #ERROR: plugins/modules/zabbix_action.py:1969:19: E131: continuation line unaligned for hanging indent
+
+            m = re.search("(?P<file>.*):(?P<line>\d+):(?P<col>\d+): (?P<message>.*)", message)
+
+            if m:
+                if int(m.group('line')) > 1:
+                    self.print_message('::error file=%s,line=%s,col=%s::%s' % (m.group('file'), m.group('line'), m.group('col'), m.group('message')), color=self.red, fd=sys.stderr)
+                else:
+                    self.print_message('::error file=%s::%s' % (m.group('file'), m.group('message')), color=self.red, fd=sys.stderr)
+            else:
+                self.print_message('::error %s' % message)
+
         else:
-            self.print_message('::error %s' % message)
+            self.print_message('ERROR: %s' % message, color=self.red, fd=sys.stderr)
     def info(self, message, verbosity=0, truncate=False):
         """
         :type message: str
