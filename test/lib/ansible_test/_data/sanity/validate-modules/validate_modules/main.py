@@ -1486,7 +1486,7 @@ class ModuleValidator(Validator):
             # If it is type: path we know it's not a secret key as it's a file path
             if (data.get('no_log') is None and
                     NO_LOG_REGEX.match(arg) and
-                    data.get('type') is not "path"):
+                    data.get('type') != "path"):
                 msg = "Argument '%s' in argument_spec appears to be a secret, though doesn't have `no_log` set" % arg
                 if context:
                     msg += " found in %s" % " -> ".join(context)
@@ -1848,7 +1848,6 @@ class ModuleValidator(Validator):
                         code='implied-parameter-type-mismatch',
                         msg=msg
                     )
-
 
             doc_choices = []
             try:
