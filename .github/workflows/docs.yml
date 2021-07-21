@@ -6,7 +6,7 @@ on:
 jobs:
   docs:
     name: Build Ansible docs
-    runs-on: macos-11
+    runs-on: macos-10.15
     steps:
       - name: Check out code
         uses: actions/checkout@v2
