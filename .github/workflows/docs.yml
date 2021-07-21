@@ -20,9 +20,9 @@ jobs:
         run: pip install -r ./docs/docsite/requirements.txt
 
 # HACK: For speed, only make a single page
-      - name: make webdocs
+      - name: Build webdocs
         #run: make htmlsingle rst=dev_guide/developing_modules_documenting.rst
-        run: make webdocs
+        run: CPU=4 make webdocs
         working-directory: docs/docsite
 
 # HACK: Replace with SCP/RSYNC to server
