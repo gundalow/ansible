@@ -6,24 +6,25 @@
 {%- else %}
   {%- set titlesuffix = "" %}
 {%- endif %}
+{%- set lang_attr = 'en' if language == None else (language | replace('_', '-')) %}
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="{{ lang_attr }}" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="{{ lang_attr }}" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  {{ metatags }}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script type="text/javascript" src="//www.redhat.com/dtm.js"></script>
+  <meta class="swiftype" name="published_at" data-type="date" content="2017-12-13" />
+  <meta class="swiftype" name="version" data-type="string" content="3.2.2">
 
   <!-- Google Tag Manager Data Layer -->
   <script>
    dataLayer = [];
   </script>
   <!-- End Google Tag Manager Data Layer -->
-
-
-
 
   {% block htmltitle %}
   <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
@@ -33,12 +34,16 @@
   {% if favicon %}
     <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
   {% endif %}
+  {# CANONICAL URL #}
+  {% if theme_canonical_url %}
+    <link rel="canonical" href="{{ theme_canonical_url }}{{ pagename }}.html"/>
+  {% endif %}
 
   {# CSS #}
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
   <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 
-  {# JS #}
+  {# OPENSEARCH #}
   {% if not embedded %}
 
     <script type="text/javascript">
@@ -55,71 +60,56 @@
     {%- endfor %}
 
     {% if use_opensearch %}
-      <link rel="search" type="application/opensearchdescription+xml" title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}" href="{{ pathto('_static/opensearch.xml', 1) }}"/>
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}"
+            href="{{ pathto('_static/opensearch.xml', 1) }}"/>
     {% endif %}
 
   {% endif %}
 
-  {# RTD hosts these file themselves, so just load on non RTD builds #}
-  {% if not READTHEDOCS %}
+  {# RTD hosts this file, so just load on non RTD builds #}
+  {%- if not READTHEDOCS %}
     <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  {% endif %}
-
-  {% for cssfile in css_files %}
+  {%- endif %}
+  <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+  {%- for css in css_files %}
+    {%- if css|attr("rel") %}
+  <link rel="{{ css.rel }}" href="{{ pathto(css.filename, 1) }}" type="text/css"{% if css.title is not none %} title="{{ css.title }}"{% endif %} />
+    {%- else %}
+  <link rel="stylesheet" href="{{ pathto(css, 1) }}" type="text/css" />
+    {%- endif %}
+  {%- endfor %}
+  {%- for cssfile in extra_css_files %}
     <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
-  {% endfor %}
+  {%- endfor %}
 
   {%- block linktags %}
     {%- if hasdoc('about') %}
-        <link rel="author" title="{{ _('About these documents') }}"
-              href="{{ pathto('about') }}"/>
+    <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />
     {%- endif %}
     {%- if hasdoc('genindex') %}
-        <link rel="index" title="{{ _('Index') }}"
-              href="{{ pathto('genindex') }}"/>
+    <link rel="index" title="{{ _('Index') }}" href="{{ pathto('genindex') }}" />
     {%- endif %}
     {%- if hasdoc('search') %}
-        <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}"/>
+    <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
     {%- endif %}
     {%- if hasdoc('copyright') %}
-        <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}"/>
-    {%- endif %}
-    <link rel="top" title="{{ docstitle|e }}" href="{{ pathto('index') }}"/>
-    {%- if parents %}
-        <link rel="up" title="{{ parents[-1].title|striptags|e }}" href="{{ parents[-1].link|e }}"/>
+    <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}" />
     {%- endif %}
     {%- if next %}
-        <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}"/>
+    <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}" />
     {%- endif %}
     {%- if prev %}
-        <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}"/>
+    <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
     {%- endif %}
   {%- endblock %}
   {%- block extrahead %} {% endblock %}
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
-  <style>
-    .search-reset-start {
-        color: #463E3F;
-        float: right;
-        position: relative;
-        top: -25px;
-        left: -10px;
-        z-index: 10;
-     }
-     .search-reset-start:hover {
-        cursor: pointer;
-        color: #2980B9;
-     }
-     #search-box-id {
-        padding-right: 25px;
-     }
-  </style>
 
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300'
-    rel='stylesheet' type='text/css'>
+  {# Keep modernizr in head - http://modernizr.com/docs/#installing #}
+  <script src="{{ pathto('_static/js/modernizr.min.js', 1) }}"></script>
 
 </head>
 
@@ -140,7 +130,8 @@
         </ul>
     </div>
 
-  <a class="DocSite-nav" href="/">
+  <a class="DocSite-nav" href="/" style="padding-bottom: 30px;">
+
     <img class="DocSiteNav-logo"
       src="{{ pathto('_static/', 1) }}images/logo_invert.png"
       alt="Ansible Logo">
@@ -149,47 +140,61 @@
     </div>
   </a>
 
+
   <div class="wy-grid-for-nav">
 
     {# SIDE NAV, TOGGLES ON MOBILE #}
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
 
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          {% block sidebartitle %}
+
       <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
         <a class="DocSiteProduct-header DocSiteProduct-header--core" href="/">
             <div class="DocSiteProduct-productName">
                 <div class="DocSiteProduct-logoText">
-                    Ansible  
+                    Ansible
                     <div class="DocSiteProduct-CurrentVersion" align="right">
                       2.5
                   </div>
                 </div>
             </div>
         </a>
-        
 
           <div class="DocSiteProduct-CheckVersionPara">For previous versions, see the  <a class="DocSiteProduct-versionheader" href="/#coreversionselect">documentation archive.</a></div>
       </div>
 
-      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
-        {% set toctree = toctree(maxdepth=4, collapse=True) %}
-        {% if toctree %}
-            {{ toctree }}
-        {% else %}
-            {{ toc }}
-        {% endif %}
+      <div class="wy-side-nav-search" style="background-color#5bbdbf;height=80px;margin:'auto auto auto auto'">
+      <!-- <a href="{{ pathto(master_doc) }}" class="icon icon-home"> {{ project }}</a> -->
+      {% include "searchbox.html" %}
+    </div>
 
 
-    <div class="DocSite-sideNav ansibleNav">
-       <ul class="">
-       <li><a href="https://www.ansible.com/ansiblefest" target="_blank">AnsibleFest</a></li>
-       <li><a href="https://www.ansible.com/tower" target="_blank">Products</a></li>
-       <li><a href="https://www.ansible.com/community" target="_blank">Community</a></li>
-       <li><a href="https://www.ansible.com/webinars-training" target="_blank">Webinars & Training</a></li>
-       <li><a href="https://www.ansible.com/blog" target="_blank">Blog</a></li>
-       </ul>
-     </div>
+          {% endblock %}
+        </div>
 
-    <!-- changeable widget -->
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          {% block menu %}
+            {#
+              The singlehtml builder doesn't handle this toctree call when the
+              toctree is empty. Skip building this for now.
+            #}
+            {% if 'singlehtml' not in builder %}
+              {% set global_toc = toctree(maxdepth=theme_navigation_depth|int,
+                                          collapse=theme_collapse_navigation|tobool,
+                                          includehidden=theme_includehidden|tobool,
+                                          titles_only=theme_titles_only|tobool) %}
+            {% endif %}
+            {% if global_toc %}
+              {{ global_toc }}
+            {% else %}
+              <!-- Local TOC -->
+              <div class="local-toc">{{ toc }}</div>
+            {% endif %}
+          {% endblock %}
+        </div>
+            <!-- changeable widget -->
     <div id="sideBanner">
     <br/>
     <a href="https://www.ansible.com/docs-left?utm_source=docs">
@@ -201,13 +206,17 @@
       </div>
       &nbsp;
     </nav>
+      </div>
+
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       {# MOBILE NAV, TRIGGLES SIDE NAV ON TOGGLE #}
-      <nav class="wy-nav-top">
-        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
-        <a href="/">{{ project }}</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        {% block mobile_nav %}
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="{{ pathto(master_doc) }}">{{ project }}</a>
+        {% endblock %}
       </nav>
 
 
@@ -228,6 +237,8 @@
         </div> -->
 
           {% include "breadcrumbs.html" %}
+          
+          {% include "ansible_eol_banner.html" %}
           <div id="page-content">
           {% block body %}{% endblock %}
           </div>
@@ -241,6 +252,41 @@
   </div>
   {% include "versions.html" %}
 
+  {% if not embedded %}
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'{{ url_root }}',
+            VERSION:'{{ release|e }}',
+            LANGUAGE:'{{ language }}',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'{{ '' if no_search_suffix else file_suffix }}',
+            HAS_SOURCE:  {{ has_source|lower }},
+            SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
+        };
+    </script>
+    {%- for scriptfile in script_files %}
+      <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endfor %}
+
+  {% endif %}
+
+  {# RTD hosts this file, so just load on non RTD builds #}
+  {% if not READTHEDOCS %}
+    <script type="text/javascript" src="{{ pathto('_static/js/theme.js', 1) }}"></script>
+  {% endif %}
+
+  <script type="text/javascript">
+      jQuery(function () {
+          {% if theme_sticky_navigation|tobool %}
+          SphinxRtdTheme.Navigation.enableSticky();
+          {% else %}
+          SphinxRtdTheme.Navigation.enable();
+          {% endif %}
+      });
+  </script>
+
+  {%- block footer %} {% endblock %}
 <!-- begin analytics -->
 <script type="text/javascript">
 var _hsq = _hsq || [];
