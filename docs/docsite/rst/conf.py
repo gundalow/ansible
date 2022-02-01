@@ -38,7 +38,8 @@ AUTHOR='Ansible, Inc'
 # Add any Sphinx extension module names here, as strings.
 # They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc']
+# TEST: 'sphinxcontrib.fulltoc'
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
 
 # Later on, add 'sphinx.ext.viewcode' to the list if you want to have
 # colorized code generated too for references.
@@ -80,7 +81,8 @@ today_fmt = '%B %d, %Y'
 
 # A list of glob-style patterns that should be excluded when looking
 # for source files.
-exclude_patterns = ['modules']
+# OBSOLETE - removing this - dharmabumstead 2018-02-06
+# exclude_patterns = ['modules']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -122,7 +124,7 @@ rst_epilog = """
 # -----------------------
 
 html_theme_path = ['../_themes']
-html_theme = 'srtd'
+html_theme = 'sphinx_rtd_theme'
 html_short_title = 'Ansible Documentation'
 
 html_theme_options = {
@@ -229,3 +231,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 autoclass_content = 'both'
+
+intersphinx_mapping = {'python': ('https://docs.python.org/2/', (None, '../python2-2.7.13.inv')),
+                       'python3': ('https://docs.python.org/3/', (None, '../python3-3.6.2.inv')),
+                       'jinja2': ('http://jinja.pocoo.org/docs/', (None, '../jinja2-2.9.7.inv'))}
